@@ -6,7 +6,7 @@
 /*   By: muhsin <muhsin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/09 01:20:27 by muhsin            #+#    #+#             */
-/*   Updated: 2025/11/09 14:17:22 by muhsin           ###   ########.fr       */
+/*   Updated: 2025/11/10 01:51:47 by muhsin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,10 +38,11 @@ void	PhoneBook::Search()
 	{
 		std::cout << "Please enter index";
 		std::cin >> index;
+		
 		// index kontrol edilecek, yanlışsa tekrar girilecek
 		// ya da çıkacak.
 		// Geçerse
-		PrintOnePerson(index);
+		// PrintOnePerson(index);
 	}
 }
 
@@ -50,21 +51,50 @@ void	PhoneBook::Exit()
 	exit(0);
 }
 
-void	PhoneBook::PrintPhoneBook()
+void	PhoneBook::PrintOneColumn(std::string personInfo)
 {
-	// Tüm kişileri numaraları olmadan listelenecek.
-	// Her yazdırma öncesi string uzunluğu kontrol edilecek
-	// Ardından yazılacak metin  10 - strlen(metin) çıkan sonuç kadar
-	// space atılıp öyle yazılacak örnek olarak
-	//     Metin| 
-	//    Muhsin|
-	// Böylelikle Pipe'ları hizalamış oluruz ve çıktı düzgün görünür.
-	// Eğer uzunlun 10 dan büyük ise son karakter kesilir ve onun yerine . yazılır.
+	int			len;
+	int			spaceCount;
+
+	len = personInfo.length();
+	if (len > 10)
+		personInfo = personInfo.substr(0, 9) + ".";
+	spaceCount = 10 - personInfo.length();
+	for (int i = 0; i < spaceCount; i++)
+		std::cout << ' ';
+	std::cout << personInfo;
 }
 
-void	PhoneBook::PrintOnePerson(std::string& index)
+void	PhoneBook::PrintPhoneBook()
 {
+	for (int i = 0; i < _totalPeople; i++)
+	{
+		std::cout << "         ";
+		std::cout << i + 1;
+		std::cout << '|';
+		PrintOneColumn(_people[i].getFirstName());
+		std::cout << '|';
+		PrintOneColumn(_people[i].getLastName());
+		std::cout << '|';
+		PrintOneColumn(_people[i].getNickName());
+		std::cout << std::endl;
+	}
+}
 
+void	PhoneBook::PrintOnePerson(int index)
+{
+	std::cout << std::endl;
+	std::cout << "         ";
+	std::cout << index + 1;
+	std::cout << '|';
+	PrintOneColumn(_people[index].getFirstName());
+	std::cout << '|';
+	PrintOneColumn(_people[index].getLastName());
+	std::cout << '|';
+	PrintOneColumn(_people[index].getNickName());
+	std::cout << '|';
+	PrintOneColumn(_people[index].getPhoneNumber());
+	std::cout << std::endl;
 }
 
 PhoneBook::PhoneBook()

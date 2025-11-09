@@ -6,7 +6,7 @@
 /*   By: muhsin <muhsin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/09 00:00:57 by muhsin            #+#    #+#             */
-/*   Updated: 2025/11/09 14:17:33 by muhsin           ###   ########.fr       */
+/*   Updated: 2025/11/10 01:49:34 by muhsin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,8 @@ public:
     void    Search();
     void    Exit();
     void    PrintPhoneBook();
-    void    PrintOnePerson(std::string& index);
+    void    PrintOnePerson(int index);
+    void    PrintOneColumn(std::string personInfo);
     PhoneBook();
 };
 
