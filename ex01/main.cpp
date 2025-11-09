@@ -6,7 +6,7 @@
 /*   By: muhsin <muhsin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/09 00:25:46 by muhsin            #+#    #+#             */
-/*   Updated: 2025/11/09 14:25:53 by muhsin           ###   ########.fr       */
+/*   Updated: 2025/11/10 01:54:49 by muhsin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,13 +44,12 @@ int main()
         std::cout << "Please enter input : ";
         std::cin >> input;
 
-        // input = toLower(input);
-        
+        input = toLower(input);
         if (input == "search")
             phoneBook.Search();
         else if (input == "add")
         {
-            
+            phoneBook.Add(createContact());
         }
         else if (input == "exit")
             phoneBook.Exit();
