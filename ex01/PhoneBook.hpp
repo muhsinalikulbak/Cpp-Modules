@@ -6,7 +6,7 @@
 /*   By: muhsin <muhsin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/09 00:00:57 by muhsin            #+#    #+#             */
-/*   Updated: 2025/11/09 01:47:14 by muhsin           ###   ########.fr       */
+/*   Updated: 2025/11/09 14:17:33 by muhsin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,16 +20,17 @@ class PhoneBook
 private:
     // Fields
     Contact _people[8];
-    int     _next_person;
-    int     _total_people;
+    int     _nextPerson;
+    int     _totalPeople;
 
 public:
     // Functions
     void    Add(const Contact& person);
-    void    Search(int index);
+    void    Search();
     void    Exit();
+    void    PrintPhoneBook();
+    void    PrintOnePerson(std::string& index);
     PhoneBook();
 };
-
 
 #endif

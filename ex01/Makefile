@@ -3,9 +3,12 @@ NAME = megaphone
 CXX = c++
 CXXFLAGS = -Wall -Wextra -Werror -std=c++98
 
-SRCS = .cpp
+SRCS = Contact.cpp \
+	   PhoneBook.cpp
+
 OBJS_DIR = obj
-OBJS = $(OBJS_DIR)/.o
+OBJS = $(OBJS_DIR)/Contact.o $(OBJS_DIR)/PhoneBook.o
+
 
 # Make silent
 MAKEFLAGS += --silent

@@ -6,7 +6,7 @@
 /*   By: muhsin <muhsin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/09 01:04:47 by muhsin            #+#    #+#             */
-/*   Updated: 2025/11/09 01:22:13 by muhsin           ###   ########.fr       */
+/*   Updated: 2025/11/09 14:06:24 by muhsin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,24 +16,24 @@
 /* Setter Functions */
 /********************/
 
-void	Contact::set_first_name(const std::string& first_name)
+void	Contact::setFirstName(const std::string& first_name)
 {
-	this->_first_name = first_name;
+	_firstName = first_name;
 }
 
-void	Contact::set_last_name(const std::string& last_name)
+void	Contact::setLastName(const std::string& last_name)
 {
-	this->_last_name = last_name;
+	_lastName = last_name;
 }
 
-void	Contact::set_nick_name(const std::string& nick_name)
+void	Contact::setNickName(const std::string& nick_name)
 {
-	this->_nick_name = nick_name;
+	_nickName = nick_name;
 }
 
-void	Contact::set_phone_number(const std::string& phone_number)
+void	Contact::setPhoneNumber(const std::string& phone_number)
 {
-	this->_phone_number = phone_number;
+	_phoneNumber = phone_number;
 }
 
 
@@ -42,22 +42,22 @@ void	Contact::set_phone_number(const std::string& phone_number)
 /* Getter Functions */
 /********************/
 
-std::string	Contact::get_first_name()
+std::string	Contact::getFirstName()
 {
-	return this->_first_name;
+	return _firstName;
 }
 
-std::string	Contact::get_last_name()
+std::string	Contact::getLastName()
 {
-	return this->_last_name;
+	return _lastName;
 }
 
-std::string	Contact::get_nick_name()
+std::string	Contact::getNickName()
 {
-	return this->_nick_name;
+	return _nickName;
 }
 
-std::string	Contact::get_first_name()
+std::string	Contact::getPhoneNumber()
 {
-	return this->_phone_number;
+	return _phoneNumber;
 }
