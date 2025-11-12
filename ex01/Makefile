@@ -1,14 +1,14 @@
 NAME = phonebook
 
 CXX = c++
-CXXFLAGS = -Wall -Wextra -Werror -std=c++98
+CXXFLAGS =  -std=c++98
 
 SRCS = Contact.cpp \
-	   PhoneBook.cpp
+	   PhoneBook.cpp \
+	   main.cpp
 
 OBJS_DIR = obj
-OBJS = $(OBJS_DIR)/Contact.o $(OBJS_DIR)/PhoneBook.o
-
+OBJS = $(OBJS_DIR)/Contact.o $(OBJS_DIR)/PhoneBook.o $(OBJS_DIR)/main.o
 
 # Make silent
 MAKEFLAGS += --silent

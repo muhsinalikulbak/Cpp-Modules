@@ -6,13 +6,12 @@
 /*   By: muhsin <muhsin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/09 01:20:27 by muhsin            #+#    #+#             */
-/*   Updated: 2025/11/11 01:27:44 by muhsin           ###   ########.fr       */
+/*   Updated: 2025/11/12 17:20:23 by muhsin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 # include "PhoneBook.hpp"
-# include <cstdlib>
-# include <iostream>
+
 
 PhoneBook::PhoneBook()
 {
@@ -20,12 +19,48 @@ PhoneBook::PhoneBook()
 	_totalPeople = 0;
 }
 
-void	PhoneBook::add(const Contact& person)
+PhoneBook::~PhoneBook() 
 {
+	std::cout << "\nExiting... °‧ 𓆝 𓆟 𓆞 ·｡" << std::endl;
+}
+
+void	PhoneBook::add()
+{
+	Contact person;
+
+	person = createContact();
 	_people[_nextPerson] = person;
 	_nextPerson = (_nextPerson + 1) % 8;
 	if (_totalPeople < 8)
 		_totalPeople++;
+}
+
+Contact PhoneBook::createContact()
+{
+	Contact 	person;
+	std::string	phoneNumber;
+
+    person.setFirstName(PhoneBook::getLine("First Name : "));
+    person.setLastName(PhoneBook::getLine("Last Name : "));
+    person.setNickName(PhoneBook::getLine("Nick Name : "));
+    person.setDarkSecret(PhoneBook::getLine("Dark Secret : "));
+
+	// PHONE NUMBER
+    while (true)
+    {
+        phoneNumber = PhoneBook::getLine("Phone number : ");
+		if (PhoneBook::isAllDigit(phoneNumber))
+		{
+			if (phoneNumber[0] == '+' && phoneNumber.length() == 11)
+				break ;
+			if (phoneNumber.length() == 10)
+				break ;
+		}
+		std::cout << "Wrong phone number!" << std::endl;
+    }
+    person.setPhoneNumber(phoneNumber);
+    std::cout << "Information saved successfully ✔️" << std::endl;
+    return (person);
 }
 
 void	PhoneBook::search()
@@ -38,56 +73,38 @@ void	PhoneBook::search()
 		return ;
 	}
 	printPhoneBook();
-	std::cout << std::endl;
 	index = getValidIndex();
 	printOnePerson(index);
 }
 
 int	PhoneBook::getValidIndex()
 {
-	std::string indexStr;
-	int			len;
-	long		num;
-	int			i;
+	std::string	strIndex;
+	int			index;
 
 	while (true)
 	{
-		std::cout << "Please enter index : ";
-		std::cin >> indexStr;
-		len = indexStr.length();
-		if (indexStr.empty() || len > 10)
+		std::cout << "Please enter index (1-" << _totalPeople;
+		strIndex = PhoneBook::getLine(") : ");
+		if (strIndex.empty() || strIndex.length() > 1 || !PhoneBook::isAllDigit(strIndex))
 		{
-			std::cout << "\033[2J\033[1;1H";
 			std::cout << "Wrong entry!" << std::endl;
-			continue ;
 		}
-		i = 0;
-		if (indexStr[i] == '+')
-			i++;
-		for (; i < len; i++)
+		else
 		{
-			if (!isdigit(indexStr[i]))
-			{
-				
-			}
+			index = strIndex[0] - '0';
+			if (index < 1 || index > _totalPeople)
+				std::cout << "Wrong entry!" << std::endl;
+			else
+				return (index - 1);
 		}
-				
-		
-		// index kontrol edilecek, yanlışsa tekrar girilecek
-		// ya da çıkacak.
-		// Geçerse
-		// PrintOnePerson(index);
 	}
-}
-
-void	PhoneBook::exit()
-{
-	exit(0);
+	return 0;
 }
 
 void	PhoneBook::printPhoneBook()
 {
-	std::cout << "     Index|First Name| Last Name| Nick Name|Dark Secre." << std::endl;
+	std::cout << "\n     Index|First Name| Last Name| Nick Name" << std::endl;
 	for (int i = 0; i < _totalPeople; i++)
 	{
 		std::cout << "         ";
@@ -98,13 +115,14 @@ void	PhoneBook::printPhoneBook()
 		printOneColumn(_people[i].getLastName());
 		std::cout << '|';
 		printOneColumn(_people[i].getNickName());
-		std::cout << std::endl;
+		std::cout << '\n' << std::endl;
 	}
 }
 
 void	PhoneBook::printOnePerson(int index)
 {
 	std::cout << std::endl;
+	std::cout << "\n     Index|First Name| Last Name| Nick Name|Dark Secre.|Phone Num." << std::endl;
 	std::cout << "         ";
 	std::cout << index + 1;
 	std::cout << '|';
@@ -132,4 +150,40 @@ void	PhoneBook::printOneColumn(std::string personInfo)
 	for (int i = 0; i < spaceCount; i++)
 		std::cout << ' ';
 	std::cout << personInfo;
+}
+
+bool	PhoneBook::isAllDigit(const std::string& strNumber)
+{
+	int	i;
+
+	i = 0;
+	if (strNumber[i] == '+')
+		i++;
+	while (i < strNumber.length())
+	{
+		if (!isdigit(strNumber[i]))
+			return (false);
+		i++;
+	}
+	return (true);
+}
+
+std::string	PhoneBook::getLine(std::string inputMessage)
+{
+	std::string	input;
+
+	while (true)
+	{
+		std::cout << inputMessage;
+		if (!std::getline(std::cin, input))
+		{
+			std::cout << "\nEOF detected, exiting..." << std::endl;
+			exit(0);
+		}
+		else if (input.empty())
+			std::cout << "Entry cannot be empty! ❌" << std::endl;
+		else
+			break ;
+	}
+	return (input);
 }

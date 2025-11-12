@@ -6,7 +6,7 @@
 /*   By: muhsin <muhsin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/09 00:25:46 by muhsin            #+#    #+#             */
-/*   Updated: 2025/11/11 01:22:07 by muhsin           ###   ########.fr       */
+/*   Updated: 2025/11/12 17:04:10 by muhsin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,51 +14,34 @@
 # include "Contact.hpp"
 # include "PhoneBook.hpp"
 
-std::string toLower(std::string& str)
-{
+// std::string toLower(std::string str)
+// {
+//     ret
+// }
 
-}
-
-Contact createContact()
-{
-    Contact     contact;
-    std::string firstName;
-    std::string lastName;
-    std::string nickName;
-    std::string phoneNumber;
-    std::string darkSecret;
-
-    while (true)
-    {
-        /* code */
-    }
-    
-}
 
 int main()
 {
     std::string input;
+    std::string prompt;
     PhoneBook   phoneBook;
 
+    prompt = "*********************\n"
+            "*Search, Add or Exit*\n"
+            "*********************\n";
+    std::cout << prompt;
     while (true)
     {
-        std::cout << "Please enter input : ";
-        std::cin >> input;
-
-        input = toLower(input);
-        if (input == "search")
+        input = PhoneBook::getLine("Please enter input : ");
+        if (input == "Exit")
+            break ;
+        if (input == "Search")
             phoneBook.search();
-        else if (input == "add")
-        {
-            phoneBook.add(createContact());
-        }
-        else if (input == "exit")
-            phoneBook.exit();
+        else if (input == "Add")
+            phoneBook.add();
         else
         {
-            std::cout << "\033[2J\033[1;1H";
-            std::cout << "Please enter one of the add, search or exit options" << std::endl;
-            std::cout << "--" << std::endl;
+            std::cout <<"-PLEASE ENTER ONE OF THE ADD!, SEARCH! OR EXIT! OPTIONS-" << std::endl;
         }
     }
 }

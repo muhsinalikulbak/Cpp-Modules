@@ -6,7 +6,7 @@
 /*   By: muhsin <muhsin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/09 01:04:47 by muhsin            #+#    #+#             */
-/*   Updated: 2025/11/11 00:53:52 by muhsin           ###   ########.fr       */
+/*   Updated: 2025/11/12 16:56:48 by muhsin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,27 +45,27 @@ void	Contact::setDarkSecret(const std::string& darkSecret)
 /* Getter Functions */
 /********************/
 
-std::string	Contact::getFirstName()
+std::string	Contact::getFirstName() const
 {
 	return _firstName;
 }
 
-std::string	Contact::getLastName()
+std::string	Contact::getLastName() const
 {
 	return _lastName;
 }
 
-std::string	Contact::getNickName()
+std::string	Contact::getNickName() const
 {
 	return _nickName;
 }
 
-std::string	Contact::getPhoneNumber()
+std::string	Contact::getPhoneNumber() const
 {
 	return _phoneNumber;
 }
 
-std::string	Contact:: getDarkSecret()
+std::string	Contact:: getDarkSecret() const
 {
 	return _darkSecret;
 }

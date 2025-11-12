@@ -6,7 +6,7 @@
 /*   By: muhsin <muhsin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/08 23:24:45 by muhsin            #+#    #+#             */
-/*   Updated: 2025/11/11 00:12:21 by muhsin           ###   ########.fr       */
+/*   Updated: 2025/11/12 16:55:36 by muhsin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,11 +36,11 @@ public:
 
 
 	// Getter Functions
-	std::string getFirstName();
-	std::string getLastName();
-	std::string getNickName();
-	std::string	getPhoneNumber();
-	std::string	getDarkSecret();
+	std::string getFirstName() const;
+	std::string getLastName() const;
+	std::string getNickName() const;
+	std::string	getPhoneNumber() const;
+	std::string	getDarkSecret() const;
 };
 
 
