@@ -6,17 +6,16 @@
 /*   By: muhsin <muhsin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/09 00:25:46 by muhsin            #+#    #+#             */
-/*   Updated: 2025/11/12 17:54:50 by muhsin           ###   ########.fr       */
+/*   Updated: 2025/11/15 02:07:19 by muhsin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-# include <iostream>
-# include "Contact.hpp"
-# include "PhoneBook.hpp"
+#include "Contact.hpp"
+#include "PhoneBook.hpp"
 
 static void strToLower(std::string& str)
 {
-    for (int i = 0; i < str.length(); i++)
+    for (size_t i = 0; i < str.length(); i++)
     {
         str[i] = tolower(str[i]);
     }
@@ -46,8 +45,6 @@ int main()
         else if (input == "add")
             phoneBook.add();
         else
-        {
             std::cout <<"-PLEASE ENTER ONE OF THE ADD!, SEARCH! OR EXIT! OPTIONS-" << std::endl;
-        }
     }
 }

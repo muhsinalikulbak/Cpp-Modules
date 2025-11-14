@@ -6,14 +6,14 @@
 /*   By: muhsin <muhsin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/08 23:24:45 by muhsin            #+#    #+#             */
-/*   Updated: 2025/11/12 17:44:20 by muhsin           ###   ########.fr       */
+/*   Updated: 2025/11/15 02:07:05 by muhsin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef CONTACT_HPP
-# define CONTACT_HPP
+#define CONTACT_HPP
 
-# include <string>
+#include <string>
 
 class Contact
 {

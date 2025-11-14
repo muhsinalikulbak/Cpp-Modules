@@ -6,11 +6,11 @@
 /*   By: muhsin <muhsin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/09 01:20:27 by muhsin            #+#    #+#             */
-/*   Updated: 2025/11/14 00:56:40 by muhsin           ###   ########.fr       */
+/*   Updated: 2025/11/15 02:07:30 by muhsin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-# include "PhoneBook.hpp"
+#include "PhoneBook.hpp"
 
 
 PhoneBook::PhoneBook()
@@ -154,7 +154,7 @@ void	PhoneBook::printOneColumn(std::string personInfo)
 
 bool	PhoneBook::isAllDigit(const std::string& strNumber)
 {
-	int	i;
+	size_t	i;
 
 	i = 0;
 	if (strNumber[i] == '+')
