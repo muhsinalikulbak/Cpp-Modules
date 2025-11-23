@@ -1,40 +1,19 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   HumanB.hpp                                         :+:      :+:    :+:   */
+/*   main.cpp                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: mkulbak <mkulbak@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/11/22 23:18:43 by muhsin            #+#    #+#             */
-/*   Updated: 2025/11/23 19:41:34 by mkulbak          ###   ########.fr       */
+/*   Created: 2025/11/23 16:35:53 by mkulbak           #+#    #+#             */
+/*   Updated: 2025/11/23 19:44:37 by mkulbak          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef HUMAN_B
-#define HUMAN_B
-
 #include <string>
 #include <iostream>
-#include "Weapon.hpp"
 
-class HumanB
+int main(int argc, char const *argv[])
 {
-private:
-
-	std::string	_name;
-	Weapon*	_weapon;
-
-public:
-
-	HumanB(const std::string& name);
-	~HumanB();
-	const std::string&	getName() const;
-	void				setName(const std::string& name);
-	void				attack();
-	void				setWeapon(Weapon& weapon);
-	Weapon				getWeapon();
-
-};
-
-
-#endif
+    
+}
