@@ -3,17 +3,17 @@
 /*                                                        :::      ::::::::   */
 /*   HumanB.cpp                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: muhsin <muhsin@student.42.fr>              +#+  +:+       +#+        */
+/*   By: mkulbak <mkulbak@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/22 23:38:00 by muhsin            #+#    #+#             */
-/*   Updated: 2025/11/23 01:01:00 by muhsin           ###   ########.fr       */
+/*   Updated: 2025/11/23 16:18:51 by mkulbak          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "HumanB.hpp"
 #include <string>
 
-HumanB::HumanB(const std::string& name) : _weapon("Gun")
+HumanB::HumanB(const std::string& name) : _weapon(NULL)
 {
     _name = name;
 }
@@ -27,20 +27,20 @@ const std::string&  HumanB::getName() const
 
 void    HumanB::setName(const std::string& name)
 {
-    _name =name;
+    _name = name;
 }
 
 void    HumanB::setWeapon(Weapon& weapon)
 {
-    _weapon = weapon;
+    _weapon = &weapon;
 }
 
-Weapon& HumanB::getWeapon()
+Weapon HumanB::getWeapon()
 {
-    return _weapon;
+    return *_weapon;
 }
 
 void    HumanB::attack()
 {
-    std::cout << _name << " attacks with their " << _weapon.getType() << std::endl;
+    std::cout << _name << " attacks with their " << _weapon->getType() << std::endl;
 }
