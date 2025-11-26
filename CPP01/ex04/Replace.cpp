@@ -3,30 +3,29 @@
 void	Replace::wordReplace(std::ifstream& source, std::ofstream& out, const char* oldStr, const char* newStr)
 {
 	std::string line;
-	int			start;
+	size_t		start;
 	size_t		pos;
+	size_t		oldLen;
 
-	getline(source, line);
-	while (!source.eof())
+	oldLen = std::strlen(oldStr);
+	while (getline(source, line))
 	{
 		start = 0;
 		pos = line.find(oldStr, start);
 		if (pos == std::string::npos)
-			out << line;
+			out << line << '\n';
 		else
 		{
 			while (pos != std::string::npos)
 			{
 				out << line.substr(start, pos - start) << newStr;
-				start = pos + std::strlen(oldStr);
+				start = pos + oldLen;
 				pos = line.find(oldStr, start); 
 			}
 			if (start != line.size())
 				out << line.substr(start, line.size() - start);
-		}
-		getline(source, line);
-		if (!source.eof())
 			out << '\n';
+		}
 	}
 }
 
@@ -41,5 +40,5 @@ void	Replace::fileReplacer(const char* file, const char* oldStr, const char* new
 	std::ifstream    sourceFile(file);
 	std::ofstream    newFile(chrFile, std::ios::out | std::ios::trunc);
 	
-	Replace::wordReplace(sourceFile, newFile, oldStr, newStr);
+	wordReplace(sourceFile, newFile, oldStr, newStr);
 }
