@@ -3,18 +3,17 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: muhsin <muhsin@student.42.fr>              +#+  +:+       +#+         #
+#    By: mkulbak <mkulbak@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/11/23 16:35:56 by mkulbak           #+#    #+#              #
-#    Updated: 2025/11/26 23:15:02 by muhsin           ###   ########.fr        #
+#    Updated: 2025/11/28 19:51:38 by mkulbak          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 NAME = replace
 
 CXX = c++
-CXXFLAGS =   -std=c++98
-# -Wall -Wextra -Werror Ekle
+CXXFLAGS =  -Wall -Wextra -Werror  -std=c++98 
 
 SRCS = main.cpp \
 	   Replace.cpp \

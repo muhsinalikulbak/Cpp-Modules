@@ -6,12 +6,12 @@
 /*   By: mkulbak <mkulbak@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/18 16:45:13 by mkulbak           #+#    #+#             */
-/*   Updated: 2025/11/18 22:12:42 by mkulbak          ###   ########.fr       */
+/*   Updated: 2025/11/28 19:53:05 by mkulbak          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef ZOMBIE_H
-#define ZOMBIE_H
+#ifndef ZOMBIE_HPP
+#define ZOMBIE_HPP
 
 #include <string>
 

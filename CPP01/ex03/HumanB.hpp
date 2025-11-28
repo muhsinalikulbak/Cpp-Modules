@@ -6,12 +6,12 @@
 /*   By: mkulbak <mkulbak@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/22 23:18:43 by muhsin            #+#    #+#             */
-/*   Updated: 2025/11/23 19:41:34 by mkulbak          ###   ########.fr       */
+/*   Updated: 2025/11/28 19:56:16 by mkulbak          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef HUMAN_B
-#define HUMAN_B
+#ifndef HUMAN_B_HPP
+#define HUMAN_B_HPP
 
 #include <string>
 #include <iostream>

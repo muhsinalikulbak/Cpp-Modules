@@ -3,16 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   HumanA.hpp                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: muhsin <muhsin@student.42.fr>              +#+  +:+       +#+        */
+/*   By: mkulbak <mkulbak@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/22 18:11:35 by mkulbak           #+#    #+#             */
-/*   Updated: 2025/11/23 00:30:19 by muhsin           ###   ########.fr       */
+/*   Updated: 2025/11/28 19:54:14 by mkulbak          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 
-#ifndef HUMAN_A
-#define HUMAN_A
+#ifndef HUMAN_A_HPP
+#define HUMAN_A_HPP
 
 #include <string>
 #include <iostream>
