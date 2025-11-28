@@ -6,7 +6,7 @@
 /*   By: mkulbak <mkulbak@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/20 14:19:17 by mkulbak           #+#    #+#             */
-/*   Updated: 2025/11/20 15:09:36 by mkulbak          ###   ########.fr       */
+/*   Updated: 2025/11/28 19:53:20 by mkulbak          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,19 +19,6 @@ Zombie::Zombie()
 
 Zombie::~Zombie()
 {
-}
-
-
-Zombie* zombieHorde( int N, std::string name )
-{
-    Zombie* zombies = new Zombie[N];
-
-    for (int i = 0; i < N; i++)
-    {
-        zombies[i].setName(name);
-        zombies[i].announce();
-    }
-    return zombies;
 }
 
 void    Zombie::announce()
