@@ -6,7 +6,7 @@
 /*   By: mkulbak <mkulbak@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/23 16:35:53 by mkulbak           #+#    #+#             */
-/*   Updated: 2025/11/28 19:44:40 by mkulbak          ###   ########.fr       */
+/*   Updated: 2025/12/02 16:14:00 by mkulbak          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,4 +43,5 @@ int main(int argc, char const *argv[])
 		return (1);
 	
 	Replace::fileReplacer(argv[1], argv[2], argv[3]);
+	return (0);
 }

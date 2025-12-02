@@ -43,7 +43,6 @@ void	Harl::complain(std::string level)
 	case 3:
 		std::cout << "[ERROR]" << std::endl;
 		(this->*funcs[3])();
-		/* fall through */
 		break;
 	default :
 		std::cout << "Invalid section" << std::endl;
