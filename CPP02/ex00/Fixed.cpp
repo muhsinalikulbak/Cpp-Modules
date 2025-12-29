@@ -3,11 +3,12 @@
 Fixed::Fixed()
 {
     std::cout << "Default Constructor is called" << std::endl;
-    _fixedNum = 0;
+    _rawBits = 0;
 }
-Fixed::Fixed()
+Fixed::Fixed(Fixed& fixed)
 {
-
+    std::cout << "Default Copy Constructor is Called" << std::endl;
+    setRawBits(fixed.getRawBits());
 }
 Fixed::~Fixed()
 {
@@ -16,10 +17,10 @@ Fixed::~Fixed()
 
 int     Fixed::getRawBits( void ) const
 {
-    
+    return _rawBits;
 }
 
 void    Fixed::setRawBits( int const raw )
 {
-
+    _rawBits = raw;
 }

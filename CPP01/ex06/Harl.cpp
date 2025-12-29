@@ -11,12 +11,12 @@ void	Harl::complain(std::string level)
 	typedef void (Harl::*func)(void);
     func 	funcs[4];
 	int		intLevel = -1;
-
+ 
 	funcs[0] = &Harl::debug;
 	funcs[1] = &Harl::info;
 	funcs[2] = &Harl::warning;
 	funcs[3] = &Harl::error;
-
+	
 	for (size_t i = 0; i < 4; i++)
 	{
 		if (level == levels[i])
