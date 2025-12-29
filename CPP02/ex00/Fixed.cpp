@@ -8,7 +8,7 @@ Fixed::Fixed()
 Fixed::Fixed(Fixed& fixed)
 {
     std::cout << "Default Copy Constructor is Called" << std::endl;
-    setRawBits(fixed.getRawBits());
+    _rawBits = fixed.getRawBits();
 }
 Fixed::~Fixed()
 {
