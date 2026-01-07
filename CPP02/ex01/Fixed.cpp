@@ -3,30 +3,34 @@
 Fixed::Fixed()
 {
     std::cout << "Default constructor called" << std::endl;
-    
+    _fixedPointValue = 0;
 }
 
-Fixed::Fixed(Fixed& fixed)
+Fixed::Fixed(const Fixed& fixed)
 {
+    this->_fixedPointValue = fixed.getRawBits();
     std::cout << "Copy constructor called" << std::endl;
-    
 }
+
 Fixed::Fixed(float floatValue)
 {
-    
+    std::cout << "Float constructor called" << std::endl;
+    int multipFactor = 1 << _fractionalsBits;
+    setRawBits(std::roundf(floatValue * multipFactor));
 }
 
 Fixed::Fixed(int intValue)
 {
-    setRawBits(intValue << 8);
+    std::cout << "Int constructor called" << std::endl;
+    setRawBits(intValue << _fractionalsBits);
 }
 
-Fixed::Fixed::~Fixed()
+Fixed::~Fixed()
 {
     std::cout << "Destructor called" << std::endl;
 }
 
-Fixed& Fixed::operator=(Fixed& other)
+Fixed& Fixed::operator=(const Fixed& other)
 {
     std::cout << "Copy assignment operator called" << std::endl;
     if (this != &other)
@@ -38,22 +42,22 @@ Fixed& Fixed::operator=(Fixed& other)
 
 float   Fixed::toFloat( void ) const
 {
-    return 1;
+    // Burası soyutlama için iyidir, eğer fractional bits değişseydi buradaki 256 da değişecekti
+    float divisionFactor = 1 << _fractionalsBits;
+    return getRawBits() / divisionFactor;
 }
 
 int     Fixed::toInt( void ) const
 {
-    return 1;
+    return getRawBits() >> _fractionalsBits;
 }
 
 int     Fixed::getRawBits( void ) const
 {
-    std::cout << "getRawBits member function called" << std::endl; 
     return _fixedPointValue;
 }
 
 void    Fixed::setRawBits( int const raw )
 {
-    std::cout << "getRawBits member function called" << std::endl; 
     _fixedPointValue = raw;
 }

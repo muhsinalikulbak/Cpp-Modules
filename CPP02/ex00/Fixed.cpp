@@ -6,7 +6,7 @@ Fixed::Fixed()
     _fixedPointValue = 0;
 }
 
-Fixed::Fixed(Fixed& fixed)
+Fixed::Fixed(const Fixed& fixed)
 {
     std::cout << "Copy constructor called" << std::endl;
     _fixedPointValue = fixed.getRawBits();
@@ -17,7 +17,7 @@ Fixed::~Fixed()
     std::cout << "Destructor called" << std::endl;
 }
 
-Fixed& Fixed::operator=(Fixed& other)
+Fixed& Fixed::operator=(const Fixed& other)
 {
     std::cout << "Copy assignment operator called" << std::endl;
     if (this != &other)

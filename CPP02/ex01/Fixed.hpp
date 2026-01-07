@@ -2,6 +2,7 @@
 #define FIXED_HPP
 
 #include <iostream>
+#include <cmath>
 
 class Fixed
 {
@@ -15,11 +16,11 @@ private:
 public:
     // Canonic Form
     Fixed();
-    Fixed(Fixed& fixed);
+    Fixed(const Fixed& fixed);
     Fixed(float floatValue);
     Fixed(int intValue);
     ~Fixed();
-    Fixed& operator = (Fixed& other);
+    Fixed& operator = (const Fixed& other);
 
     // Member Functions
     float   toFloat( void ) const;
