@@ -16,7 +16,7 @@ void	Harl::complain(std::string level)
 	funcs[1] = &Harl::info;
 	funcs[2] = &Harl::warning;
 	funcs[3] = &Harl::error;
-	
+
 	for (size_t i = 0; i < 4; i++)
 	{
 		if (level == levels[i])
