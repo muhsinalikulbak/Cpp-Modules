@@ -16,7 +16,7 @@ Fixed::Fixed(float floatValue)
 {
     std::cout << "Float constructor called" << std::endl;
     int multipFactor = 1 << _fractionalsBits;
-    setRawBits(std::roundf(floatValue * multipFactor));
+    setRawBits(static_cast<int> (std::roundf(floatValue * multipFactor)));
 }
 
 Fixed::Fixed(int intValue)
@@ -42,9 +42,9 @@ Fixed& Fixed::operator=(const Fixed& other)
 
 float   Fixed::toFloat( void ) const
 {
-    // Burası soyutlama için iyidir, eğer fractional bits değişseydi buradaki 256 da değişecekti
-    float divisionFactor = 1 << _fractionalsBits;
-    return getRawBits() / divisionFactor;
+    // Burası soyutlama için iyi bir pratiktir.
+    float divisionFactor = static_cast<float> (1 << _fractionalsBits);
+    return static_cast<float> (getRawBits() / divisionFactor);
 }
 
 int     Fixed::toInt( void ) const
