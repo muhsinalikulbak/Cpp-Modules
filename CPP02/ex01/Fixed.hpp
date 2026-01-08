@@ -17,20 +17,19 @@ public:
     // Canonic Form
     Fixed();
     Fixed(const Fixed& fixed);
-    Fixed(float floatValue);
-    Fixed(int intValue);
+    Fixed(const float& floatValue);
+    Fixed(const int& intValue);
     ~Fixed();
     Fixed& operator = (const Fixed& other);
 
     // Member Functions
     float   toFloat( void ) const;
     int     toInt( void ) const;
-
     int     getRawBits( void ) const;
     void    setRawBits( int const raw );
 
 };
 
-
+std::ostream & operator<<(std::ostream & o, Fixed const & i);
 
 #endif

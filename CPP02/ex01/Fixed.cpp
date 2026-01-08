@@ -12,14 +12,14 @@ Fixed::Fixed(const Fixed& fixed)
     std::cout << "Copy constructor called" << std::endl;
 }
 
-Fixed::Fixed(float floatValue)
+Fixed::Fixed(const float& floatValue)
 {
     std::cout << "Float constructor called" << std::endl;
     int multipFactor = 1 << _fractionalsBits;
-    setRawBits(static_cast<int> (std::roundf(floatValue * multipFactor)));
+    setRawBits(static_cast<int> (roundf(floatValue * multipFactor)));
 }
 
-Fixed::Fixed(int intValue)
+Fixed::Fixed(const int& intValue)
 {
     std::cout << "Int constructor called" << std::endl;
     setRawBits(intValue << _fractionalsBits);
@@ -45,6 +45,12 @@ float   Fixed::toFloat( void ) const
     // Burası soyutlama için iyi bir pratiktir.
     float divisionFactor = static_cast<float> (1 << _fractionalsBits);
     return static_cast<float> (getRawBits() / divisionFactor);
+}
+
+std::ostream &operator<<(std::ostream & o, Fixed const & i)
+{
+    o << i.toFloat();
+    return o;
 }
 
 int     Fixed::toInt( void ) const
