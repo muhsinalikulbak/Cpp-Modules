@@ -7,7 +7,7 @@
 class Fixed
 {
 private:
-    static const int  _fractionalsBits = 8;
+    static const int  _fractionalBits = 8;
     int _fixedPointValue;
     // Normalde static değişken deklarasyonu class dışında olur ama eğer static const ise class içerisinde yapılabilir.
     // floating point sayılar dışında diğer primitive type değişkenler için bu kural geçerlidir.

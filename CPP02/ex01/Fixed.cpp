@@ -15,14 +15,14 @@ Fixed::Fixed(const Fixed& fixed)
 Fixed::Fixed(const float& floatValue)
 {
     std::cout << "Float constructor called" << std::endl;
-    int multipFactor = 1 << _fractionalsBits;
+    int multipFactor = 1 << _fractionalBits;
     setRawBits(static_cast<int> (roundf(floatValue * multipFactor)));
 }
 
 Fixed::Fixed(const int& intValue)
 {
     std::cout << "Int constructor called" << std::endl;
-    setRawBits(intValue << _fractionalsBits);
+    setRawBits(intValue << _fractionalBits);
 }
 
 Fixed::~Fixed()
@@ -42,7 +42,7 @@ Fixed& Fixed::operator=(const Fixed& other)
 
 float   Fixed::toFloat( void ) const
 {
-    float divisionFactor = static_cast<float> (1 << _fractionalsBits);
+    float divisionFactor = static_cast<float> (1 << _fractionalBits);
     return static_cast<float> (getRawBits() / divisionFactor);
 }
 
@@ -54,7 +54,7 @@ std::ostream &operator<<(std::ostream & os, const Fixed& rhs)
 
 int     Fixed::toInt( void ) const
 {
-    return getRawBits() >> _fractionalsBits;
+    return getRawBits() >> _fractionalBits;
 }
 
 int     Fixed::getRawBits( void ) const

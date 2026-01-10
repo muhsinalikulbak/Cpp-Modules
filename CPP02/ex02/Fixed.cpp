@@ -16,14 +16,14 @@ Fixed::Fixed(const Fixed& fixed)
 Fixed::Fixed(const float& floatValue)
 {
     std::cout << "Float constructor called" << std::endl;
-    int scale = 1 << _fractionalsBits;
+    int scale = 1 << _fractionalBits;
     setRawBits(static_cast<int> (roundf(floatValue * scale)));
 }
 
 Fixed::Fixed(const int& intValue)
 {
     std::cout << "Int constructor called" << std::endl;
-    setRawBits(intValue << _fractionalsBits);
+    setRawBits(intValue << _fractionalBits);
 }
 
 Fixed::~Fixed()
@@ -43,7 +43,7 @@ Fixed& Fixed::operator=(const Fixed& other)
 
 float   Fixed::toFloat( void ) const
 {
-    float scale = static_cast<float> (1 << _fractionalsBits);
+    float scale = static_cast<float> (1 << _fractionalBits);
     return static_cast<float> (getRawBits() / scale);
 }
 
@@ -55,7 +55,7 @@ std::ostream &operator<<(std::ostream & os, const Fixed& rhs)
 
 int     Fixed::toInt( void ) const
 {
-    return getRawBits() >> _fractionalsBits;
+    return getRawBits() >> _fractionalBits;
 }
 
 int     Fixed::getRawBits( void ) const
@@ -119,12 +119,13 @@ Fixed   Fixed::operator - (const Fixed& rhs) const
 
 Fixed   Fixed::operator * (const Fixed& rhs) const
 {
-    int scale = 1 << _fractionalsBits;
+    int scale = 1 << _fractionalBits;
     Fixed fixed;
 
     // Burada scale'e bölmemizin sebebi scale'in scale^2 olarak büyümesini önlemektir.
-    // yani aslında 256 value içerisinde vardır -- > (raw_a * 256) * (raw_b * 256)
-    // Ölçeklenmiş sayı raw * 256 olarak düşünebiliriz
+    // yani aslında 256 value içerisinde vardır -- > (raw_a * 256) * (raw_b * 256) olarak saklanır
+    // Çünkü veriyi scale ile çarptık
+    // Yani Ölçeklenmiş sayı raw * 256 olarak düşünebiliriz
     // Çarpmayı direk yaparsak eğer 256 ölçeği --> 256^2 olacaktır
     // O yüzden 256'ya bölerek scale'in yine 256 olarak kalmasını sağlıyoruz.
     fixed.setRawBits(this->_fixedPointValue * rhs._fixedPointValue / scale);
@@ -133,11 +134,14 @@ Fixed   Fixed::operator * (const Fixed& rhs) const
 
 Fixed   Fixed::operator / (const Fixed& rhs) const
 {
-    int scale = 1 << _fractionalsBits;
+    int scale = 1 << _fractionalBits;
     Fixed fixed;
 
     // Aynı şekilde de burada ölçek (raw_a * 256) / (raw_b * 256) yapınca ölçekler
     // kaybolacağı için tekrar ölçekle çarpıyoruz.
+    // Burada direk çarpanların da kaybolacağını düşünebilirsiniz.
+    // Yani iki sayının (_fixedPointValue) asal çarpanlarını ortaya çıkarıp
+    // 256 çarpnını elde edebiliriz.
     // Nasıl ki çarpmada ölçek büyüyorsa scale^2 burada da ölçek kayboluyor.
 
     fixed.setRawBits(this->_fixedPointValue / rhs._fixedPointValue * scale);
