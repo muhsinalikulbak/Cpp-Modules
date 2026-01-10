@@ -72,62 +72,64 @@ void    Fixed::setRawBits( int const raw )
 
 // OPERATOR OVERLOADS
 
-bool    Fixed::operator < (const Fixed& rhs)
+bool    Fixed::operator < (const Fixed& rhs) const
 {
     return this->_fixedPointValue < rhs._fixedPointValue;
 }
 
-bool    Fixed::operator > (const Fixed& rhs)
+bool    Fixed::operator > (const Fixed& rhs) const
 {
     return this->_fixedPointValue > rhs._fixedPointValue;
 }
 
-bool    Fixed::operator >= (const Fixed& rhs)
+bool    Fixed::operator >= (const Fixed& rhs) const
 {
     return this->_fixedPointValue >= rhs._fixedPointValue;
 }
 
-bool    Fixed::operator <= (const Fixed& rhs)
+bool    Fixed::operator <= (const Fixed& rhs) const
 {
     return this->_fixedPointValue <= rhs._fixedPointValue;
 }
 
-bool    Fixed::operator == (const Fixed& rhs)
+bool    Fixed::operator == (const Fixed& rhs) const
 {
     return this->_fixedPointValue == rhs._fixedPointValue;
 }
 
-bool    Fixed::operator != (const Fixed& rhs)
+bool    Fixed::operator != (const Fixed& rhs) const
 {
     return this->_fixedPointValue != rhs._fixedPointValue;
 }
 
 
-const Fixed    Fixed::operator + (const Fixed& rhs)
+Fixed   Fixed::operator + (const Fixed& rhs) const
 {
     Fixed fixed;
     fixed.setRawBits(this->_fixedPointValue + rhs._fixedPointValue);
     return fixed;
 }
 
-const Fixed    Fixed::operator - (const Fixed& rhs)
+Fixed   Fixed::operator - (const Fixed& rhs) const
 {
     Fixed fixed;
     fixed.setRawBits(this->_fixedPointValue - rhs._fixedPointValue);
     return fixed;
 }
 
-const Fixed    Fixed::operator * (const Fixed& rhs)
+Fixed   Fixed::operator * (const Fixed& rhs) const
 {
     int scale = 1 << _fractionalsBits;
     Fixed fixed;
 
+    // Sayımız ölçekli olduğu için işlem yaparken de ölçeği dahil ediyoruz.
+    // (A * scale) * (B * scale) = A * B * scale ^ 2;
     scale = scale * scale;
     fixed.setRawBits(this->_fixedPointValue * rhs._fixedPointValue * scale);
     return fixed;
 }
 
-const Fixed    Fixed::operator / (const Fixed& rhs)
+Fixed   Fixed::operator / (const Fixed& rhs) const
 {
     int scale = 1 << _fractionalsBits;
     Fixed fixed;
