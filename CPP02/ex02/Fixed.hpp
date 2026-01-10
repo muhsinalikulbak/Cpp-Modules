@@ -1,7 +1,6 @@
 #ifndef FIXED_HPP
 #define FIXED_HPP
 
-#include <fstream>
 #include <iostream>
 #include <cmath>
 
@@ -40,6 +39,10 @@ public:
     const Fixed operator - (const Fixed& rhs);
     const Fixed operator * (const Fixed& rhs);
     const Fixed operator / (const Fixed& rhs);
+
+
+
+
 
 
 };

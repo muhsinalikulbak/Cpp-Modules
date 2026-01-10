@@ -12,6 +12,7 @@ Fixed::Fixed(const Fixed& fixed)
     *this = fixed;
 }
 
+
 Fixed::Fixed(const float& floatValue)
 {
     std::cout << "Float constructor called" << std::endl;
