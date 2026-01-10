@@ -30,6 +30,6 @@ public:
 
 };
 
-std::ostream & operator<<(std::ostream & o, Fixed const & i);
+std::ostream & operator<<(std::ostream & os, const Fixed& rhs);
 
 #endif

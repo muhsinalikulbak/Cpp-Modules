@@ -42,15 +42,14 @@ Fixed& Fixed::operator=(const Fixed& other)
 
 float   Fixed::toFloat( void ) const
 {
-    // Burası soyutlama için iyi bir pratiktir.
     float divisionFactor = static_cast<float> (1 << _fractionalsBits);
     return static_cast<float> (getRawBits() / divisionFactor);
 }
 
-std::ostream &operator<<(std::ostream & o, Fixed const & i)
+std::ostream &operator<<(std::ostream & os, const Fixed& rhs)
 {
-    o << i.toFloat();
-    return o;
+    os << rhs.toFloat();
+    return os;
 }
 
 int     Fixed::toInt( void ) const
