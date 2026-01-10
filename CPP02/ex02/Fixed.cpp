@@ -122,10 +122,12 @@ Fixed   Fixed::operator * (const Fixed& rhs) const
     int scale = 1 << _fractionalsBits;
     Fixed fixed;
 
-    // Sayımız ölçekli olduğu için işlem yaparken de ölçeği dahil ediyoruz.
-    // (A * scale) * (B * scale) = A * B * scale ^ 2;
-    scale = scale * scale;
-    fixed.setRawBits(this->_fixedPointValue * rhs._fixedPointValue * scale);
+    // Burada scale'e bölmemizin sebebi scale'in scale^2 olarak büyümesini önlemektir.
+    // yani aslında 256 value içerisinde vardır -- > (raw_a * 256) * (raw_b * 256)
+    // Ölçeklenmiş sayı raw * 256 olarak düşünebiliriz
+    // Çarpmayı direk yaparsak eğer 256 ölçeği --> 256^2 olacaktır
+    // O yüzden 256'ya bölerek scale'in yine 256 olarak kalmasını sağlıyoruz.
+    fixed.setRawBits(this->_fixedPointValue * rhs._fixedPointValue / scale);
     return fixed;
 }
 
@@ -134,6 +136,64 @@ Fixed   Fixed::operator / (const Fixed& rhs) const
     int scale = 1 << _fractionalsBits;
     Fixed fixed;
 
-    fixed.setRawBits(this->_fixedPointValue * scale / rhs._fixedPointValue);
+    // Aynı şekilde de burada ölçek (raw_a * 256) / (raw_b * 256) yapınca ölçekler
+    // kaybolacağı için tekrar ölçekle çarpıyoruz.
+    // Nasıl ki çarpmada ölçek büyüyorsa scale^2 burada da ölçek kayboluyor.
+
+    fixed.setRawBits(this->_fixedPointValue / rhs._fixedPointValue * scale);
     return fixed;
+}
+
+
+// Increment-Decrement Overloads
+
+// Prefix
+Fixed& Fixed::operator++()
+{
+    _fixedPointValue++;
+    return *this;
+}
+
+Fixed& Fixed::operator--()
+{
+    _fixedPointValue--;
+    return *this;
+}
+
+// Postfix
+Fixed Fixed::operator++(int)
+{
+    Fixed prev = *this;
+    _fixedPointValue++;
+    return prev;
+}
+
+Fixed Fixed::operator--(int)
+{
+    Fixed prev = *this;
+    _fixedPointValue--;
+    return prev;
+}
+
+
+// Function Overloads
+Fixed&  Fixed::min(Fixed& f1, Fixed& f2)
+{
+    return f1 < f2 ? f1 : f2;
+}
+
+const Fixed& Fixed::min(const Fixed& f1, const Fixed& f2)
+{
+    return f1 < f2 ? f1 : f2;
+}
+
+
+Fixed& Fixed::max (Fixed& f1, Fixed& f2)
+{
+    return f1 > f2 ? f1 : f2;
+}
+
+const Fixed& Fixed::max (const Fixed& f1, const Fixed& f2)
+{
+    return f1 > f2 ? f1 : f2;
 }

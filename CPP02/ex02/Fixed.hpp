@@ -39,8 +39,22 @@ public:
     Fixed operator - (const Fixed& rhs) const;
     Fixed operator * (const Fixed& rhs) const;
     Fixed operator / (const Fixed& rhs) const;
-    Fixed& operator++();
 
+    // Increment-Decrement Overloads
+
+    // Prefix
+    Fixed& operator++();
+    Fixed& operator--();
+    // Postfix
+    Fixed operator++(int);
+    Fixed operator--(int);
+
+    // Function Overloads
+    static Fixed& min(Fixed& f1, Fixed& f2);
+    static const Fixed& min(const Fixed& f1, const Fixed& f2);
+
+    static Fixed& max (Fixed& f1, Fixed& f2);
+    static const Fixed& max (const Fixed& f1, const Fixed& f2);
 };
 
 std::ostream & operator<<(std::ostream & os, const Fixed& rhs);
