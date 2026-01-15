@@ -34,8 +34,6 @@ public:
     unsigned int getHitPoints() const;
     unsigned int getEnergyPoints() const;
     unsigned int getAttackDamage() const;
-
-
 };
 
 #endif
