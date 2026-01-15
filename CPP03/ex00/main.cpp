@@ -11,7 +11,8 @@ int main()
     trap.takeDamage(clap.getAttackDamage());
 
     std::cout << "\n--- Energy Depletion Test ---" << std::endl;
-    for (int i = 0; i < 11; i++) {
+    for (int i = 0; i < 11; i++)
+    {
         clap.beRepaired(1);
     }
 

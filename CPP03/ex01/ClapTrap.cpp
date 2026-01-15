@@ -2,7 +2,7 @@
 
 ClapTrap::ClapTrap()
 {
-    std::cout << "ClapTrap default constructor called" << std::endl;
+    std::cout << "ClapTrap created!" << std::endl;
     _name = "";
     _hitPoints = 10;
     _energyPoints = 10;
@@ -11,18 +11,18 @@ ClapTrap::ClapTrap()
 
 ClapTrap::ClapTrap(const ClapTrap& other)
 {
-    std::cout << "ClapTrap copy constructor called" << std::endl;
+    std::cout << "ClapTrap " << other._name << " created (copy)!" << std::endl;
     *this = other;
 }
 
 ClapTrap::~ClapTrap()
 {
-    std::cout << "ClapTrap " << _name << " destructed!" << std::endl;
+    std::cout << "ClapTrap " << _name << " destroyed!" << std::endl;
 }
 
 ClapTrap& ClapTrap::operator = (const ClapTrap& rhs)
 {
-    std::cout << "ClapTrap assignment operator called" << std::endl;
+    std::cout << "ClapTrap assignment operator called!" << std::endl;
 
     if (this != &rhs)
     {
