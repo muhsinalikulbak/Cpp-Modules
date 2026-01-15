@@ -6,7 +6,8 @@
 
 class ClapTrap
 {
-private:
+// Protected for inheritance
+protected:
 
     std::string _name;
     unsigned int _hitPoints;

@@ -1,25 +1,19 @@
-#include "ClapTrap.hpp"
+#include "ScavTrap.hpp"
 
-int main()
-{
-    std::cout << "--- Robots Construction ---" << std::endl;
-    ClapTrap clap("CLP-4");
-    ClapTrap trap("TRP-0");
+int main() {
+    // 1. Test: Construction and Destruction order
+    std::cout << "--- Creating ScavTrap ---" << std::endl;
+    ScavTrap scav("Scavy");
 
-    std::cout << "\n--- Battle Start ---" << std::endl;
-    clap.attack("TRP-0");
-    trap.takeDamage(clap.getAttackDamage());
+    std::cout << "\n--- Action Tests ---" << std::endl;
+    scav.attack("Target Dummy");
+    scav.takeDamage(30);
+    scav.beRepaired(20);
 
-    std::cout << "\n--- Energy Depletion Test ---" << std::endl;
-    for (int i = 0; i < 11; i++) {
-        clap.beRepaired(1);
-    }
+    // 2. Test: Special ScavTrap capacity
+    std::cout << "\n--- Special Ability Test ---" << std::endl;
+    scav.guardGate();
 
-    std::cout << "\n--- Death Test ---" << std::endl;
-    trap.takeDamage(20);
-    trap.attack("CLP-4");
-    trap.beRepaired(5);
-
-    std::cout << "\n--- Deconstruction ---" << std::endl;
+    std::cout << "\n--- End of Program (Watch destruction order) ---" << std::endl;
     return 0;
 }
