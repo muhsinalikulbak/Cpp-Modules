@@ -9,9 +9,9 @@ class ClapTrap
 private:
 
     std::string _name;
-    int _hitPoints;
-    int _energyPoints;
-    int _attackDamage;
+    unsigned int _hitPoints;
+    unsigned int _energyPoints;
+    unsigned int _attackDamage;
 
 
 
@@ -19,16 +19,20 @@ public:
 
     // Canonic Form
     ClapTrap();
-    ClapTrap(ClapTrap& other);
+    ClapTrap(const ClapTrap& other);
     ~ClapTrap();
     ClapTrap& operator = (const ClapTrap& rhs);
 
-    ClapTrap(std::string& name);
+    ClapTrap(const std::string& name);
 
     void attack(const std::string& target);
     void takeDamage(unsigned int amount);
     void beRepaired(unsigned int amount);
 
+    std::string getName() const;
+    unsigned int getHitPoints() const;
+    unsigned int getEnergyPoints() const;
+    unsigned int getAttackDamage() const;
 
 
 };
