@@ -4,7 +4,6 @@
 FragTrap::FragTrap() : ClapTrap()
 {
     std::cout << "FragTrap ready!" << std::endl;
-    _name = "";
     _hitPoints = 100;
     _energyPoints = 100;
     _attackDamage = 30;
@@ -13,7 +12,6 @@ FragTrap::FragTrap() : ClapTrap()
 FragTrap::FragTrap(const FragTrap& other) : ClapTrap(other)
 {
     std::cout << "FragTrap " << other._name << " ready (copy)!" << std::endl;
-    *this = other;
 }
 
 
@@ -39,7 +37,6 @@ FragTrap& FragTrap::operator = (const FragTrap& rhs)
 FragTrap::FragTrap(std::string name) : ClapTrap(name)
 {
     std::cout << "FragTrap " << name << " ready!" << std::endl;
-    _name = name;
     _hitPoints = 100;
     _energyPoints = 100;
     _attackDamage = 30;

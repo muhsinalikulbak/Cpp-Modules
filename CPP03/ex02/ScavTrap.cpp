@@ -4,7 +4,6 @@
 ScavTrap::ScavTrap() : ClapTrap()
 {
     std::cout << "ScavTrap activated!" << std::endl;
-    _name = "";
     _hitPoints = 100;
     _energyPoints = 50;
     _attackDamage = 20;
@@ -13,7 +12,6 @@ ScavTrap::ScavTrap() : ClapTrap()
 ScavTrap::ScavTrap(const ScavTrap& other) : ClapTrap(other)
 {
     std::cout << "ScavTrap " << other._name << " activated (copy)!" << std::endl;
-    *this = other;
 }
 
 
@@ -39,7 +37,6 @@ ScavTrap& ScavTrap::operator = (const ScavTrap& rhs)
 ScavTrap::ScavTrap(std::string name) : ClapTrap(name)
 {
     std::cout << "ScavTrap " << name << " has been built!" << std::endl;
-    _name = name;
     _hitPoints = 100;
     _energyPoints = 50;
     _attackDamage = 20;

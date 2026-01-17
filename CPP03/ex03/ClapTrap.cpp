@@ -1,5 +1,4 @@
-lsfsefs
-z#include "ClapTrap.hpp"
+#include "ClapTrap.hpp"
 
 ClapTrap::ClapTrap()
 {
