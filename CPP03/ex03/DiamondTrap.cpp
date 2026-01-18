@@ -2,7 +2,7 @@
 
 DiamondTrap::DiamondTrap():ClapTrap(), FragTrap(), ScavTrap()
 {
-    std::cout << "Diamond runs with default right now !" << std::endl;
+    std::cout << "DiamondTrap activated!" << std::endl;
     _name = "";
     _hitPoints = 100;
     _energyPoints = 50;
@@ -11,19 +11,21 @@ DiamondTrap::DiamondTrap():ClapTrap(), FragTrap(), ScavTrap()
 
 DiamondTrap::DiamondTrap(const DiamondTrap& other):ClapTrap(other), FragTrap(other), ScavTrap(other)
 {
-    std::cout << "Diamond starts with copy" << std::endl;
+    std::cout << "DiamondTrap " << other._name << " activated (copy)!" << std::endl;
     _name = other._name;
 }
 
 DiamondTrap::~DiamondTrap()
 {
-    std::cout << "Diamond Destroyed !" << std::endl;
+    std::cout << "DiamondTrap " << _name << " deactivated!" << std::endl;
 }
 
 DiamondTrap& DiamondTrap::operator = (const DiamondTrap& rhs)
 {
+    std::cout << "DiamondTrap assignment operator called!" << std::endl;
     if (this != &rhs)
     {
+        ClapTrap::_name = rhs.ClapTrap::_name;
         _name = rhs._name;
         _hitPoints = rhs._hitPoints;
         _energyPoints = rhs._energyPoints;
@@ -34,6 +36,7 @@ DiamondTrap& DiamondTrap::operator = (const DiamondTrap& rhs)
 
 DiamondTrap::DiamondTrap(const std::string& name):ClapTrap(name + "_clap_name")
 {
+    std::cout << "DiamondTrap " << name << " has been built!" << std::endl;
     _name = name;
     _hitPoints = 100;
     _energyPoints = 50;
