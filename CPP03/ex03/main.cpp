@@ -32,10 +32,10 @@ int main()
 
     std::cout << "========== ASSIGNMENT OPERATOR TEST ==========" << std::endl;
     DiamondTrap thunder("Thunder");
-    std::cout << "Before assignment:" << std::endl;
+    std::cout << "----------Before assignment----------" << std::endl;
     thunder.whoAmI();
     thunder = spark;
-    std::cout << "After assignment:" << std::endl;
+    std::cout << "----------After assignment-----------" << std::endl;
     thunder.whoAmI();
     std::cout << std::endl;
 
