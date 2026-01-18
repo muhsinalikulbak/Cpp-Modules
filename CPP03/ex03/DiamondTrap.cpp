@@ -1,6 +1,4 @@
 #include "DiamondTrap.hpp"
-#include "FragTrap.hpp"
-#include "ScavTrap.hpp"
 
 DiamondTrap::DiamondTrap():ClapTrap(), FragTrap(), ScavTrap()
 {
