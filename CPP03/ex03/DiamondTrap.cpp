@@ -25,6 +25,14 @@ DiamondTrap& DiamondTrap::operator = (const DiamondTrap& rhs)
     std::cout << "DiamondTrap assignment operator called!" << std::endl;
     if (this != &rhs)
     {
+        // Burada ClapTrap'e özel bir sürü değişken ataması olabilirdi
+        // Tabiki private olarak, çünkü diamond private'a erişemez
+        // Ama aslında bir clapTrap olduğu için bu erişimi ClapTrap içinde yapabilir
+        // İşte o zaman ClapTrap::operator=(rhs); kullanarak ilgili tüm ClapTrap
+        // verilerini rhs üzerinden görünülebilirliğini sağlayıp kopyalayabilirdik.
+        // Aynı şekilde Frag ve Scav için de geçerli çünkü
+        // Aslında bir diamond aynı zamanda scav, frag ve claptrap dir.
+
         ClapTrap::_name = rhs.ClapTrap::_name;
         _name = rhs._name;
         _hitPoints = rhs._hitPoints;
