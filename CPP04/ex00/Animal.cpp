@@ -22,7 +22,7 @@ Animal& Animal::operator = (const Animal& rhs)
     this->type = rhs.type;
 }
 
-void Animal::makeSound()
+void Animal::makeSound() const
 {
-
+    std::cout << "Animel called the makeSound() function" << std::endl;
 }
