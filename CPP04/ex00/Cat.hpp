@@ -2,8 +2,9 @@
 #define CAT_HPP
 
 #include <string>
+#include "Animal.hpp"
 
-class Cat
+class Cat : Animal
 {
 protected:
     std::string type;
@@ -13,7 +14,6 @@ public:
     ~Cat();
     Cat(const Cat& other);
     Cat& operator = (const Cat& rhs);
-
 };
 
 #endif

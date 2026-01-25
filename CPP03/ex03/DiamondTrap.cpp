@@ -32,8 +32,12 @@ DiamondTrap& DiamondTrap::operator = (const DiamondTrap& rhs)
         // verilerini rhs üzerinden görünülebilirliğini sağlayıp kopyalayabilirdik.
         // Aynı şekilde Frag ve Scav için de geçerli çünkü
         // Aslında bir diamond aynı zamanda scav, frag ve claptrap dir.
-
-        ClapTrap::_name = rhs.ClapTrap::_name;
+        
+        // Bu durumda rhs içindeki Frag, Scav ve Clap class'larının private değişkenlerine veri ataması yapılabilir.
+        ClapTrap::operator=(rhs);
+        FragTrap::operator=(rhs);
+        ScavTrap::operator=(rhs);
+        // ClapTrap::_name = rhs.ClapTrap::_name;
         _name = rhs._name;
         _hitPoints = rhs._hitPoints;
         _energyPoints = rhs._energyPoints;
