@@ -4,16 +4,17 @@
 #include <string>
 #include "Animal.hpp"
 
-class Dog : Animal
+class Dog : public Animal
 {
-protected:
-    std::string type;
-
+    
 public:
+    // Canonic Form
     Dog();
     ~Dog();
     Dog(const Dog& other);
     Dog& operator = (const Dog& rhs);
+
+    void makeSound() const;
 };
 
 #endif

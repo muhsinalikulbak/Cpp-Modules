@@ -11,11 +11,12 @@ protected:
 public:
     //Canonic Form
     Animal();
-    ~Animal();
+    virtual ~Animal();
     Animal(const Animal& other);
     Animal& operator = (const Animal& rhs);
 
     virtual void makeSound() const;
+    std::string getType() const;
 };
 
 #endif

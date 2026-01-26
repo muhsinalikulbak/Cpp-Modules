@@ -1,26 +1,34 @@
-    
-Animal::Animal()
+#include "Dog.hpp"    
+
+Dog::Dog() : Animal()
 {
-    std::cout << "Animal is created" << std::endl;
-    type = "Animal";
+    std::cout << "Dog is created" << std::endl;
+    type = "Dog";
 }
-Animal::~Animal()
+Dog::~Dog()
 {
-    std::cout << "Animal is destroyed" << std::endl;
+    std::cout << "Dog is destroyed" << std::endl;
 }
-Animal::Animal(const Animal& other)
+
+Dog::Dog(const Dog& other) : Animal(other)
 {
-    std::cout << "Animal copy constructor  called" << std::endl;
+    std::cout << "Dog copy constructor  called" << std::endl;
     *this = other;
-
-}
-Animal& Animal::operator = (const Animal& rhs)
-{
-    std::cout << "Animal copy assignment operator called" << std::endl;
-    this->type = rhs.type;
 }
 
-void Animal::makeSound()
+Dog& Dog::operator = (const Dog& rhs)
 {
-    std::cout << "Animel called the makeSound() function" << std::endl;
+    std::cout << "Dog copy assignment operator called" << std::endl;
+
+    if (this != &rhs)
+    {
+        Animal::operator=(rhs);
+        this->type = rhs.type;
+    }
+    return *this;
+}
+
+void Dog::makeSound() const
+{
+    std::cout << "Woof wood!" << std::endl;
 }

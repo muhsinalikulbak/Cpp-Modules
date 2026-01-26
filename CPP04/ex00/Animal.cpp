@@ -14,15 +14,24 @@ Animal::Animal(const Animal& other)
 {
     std::cout << "Animal copy constructor  called" << std::endl;
     *this = other;
-
 }
 Animal& Animal::operator = (const Animal& rhs)
 {
     std::cout << "Animal copy assignment operator called" << std::endl;
-    this->type = rhs.type;
+    
+    if (this != &rhs)
+    {
+        this->type = rhs.type;
+    } 
+    return *this;
 }
 
 void Animal::makeSound() const
 {
-    std::cout << "Animel called the makeSound() function" << std::endl;
+    std::cout << "Animal called the makeSound() function" << std::endl;
+}
+
+std::string Animal::getType() const
+{
+    return type;    
 }

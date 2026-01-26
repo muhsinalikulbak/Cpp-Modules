@@ -4,10 +4,9 @@
 #include <string>
 #include "Animal.hpp"
 
-class Cat : Animal
+class Cat : public Animal
 {
-protected:
-    std::string type;
+
 
 public:
     Cat();
