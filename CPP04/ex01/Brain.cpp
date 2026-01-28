@@ -3,7 +3,7 @@
 
 Brain::Brain()
 {
-    std::cout << "Brain Default Constructor Called";
+    std::cout << "Brain Default Constructor Called" << std::endl;
 }
 Brain::~Brain()
 {
@@ -25,7 +25,7 @@ Brain& Brain::operator = (const Brain& rhs)
 
     if (this != &rhs)
     {
-        for (int i = 0; i < rhs.ideas->length(); i++)
+        for (unsigned int i = 0; i < rhs.ideas->length(); i++)
         {
             ideas[i] = rhs.ideas[i];
         }
