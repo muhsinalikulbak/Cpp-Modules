@@ -25,7 +25,7 @@ Brain& Brain::operator = (const Brain& rhs)
 
     if (this != &rhs)
     {
-        for (unsigned int i = 0; i < rhs.ideas->length(); i++)
+        for (int i = 0; i < 100; i++)
         {
             ideas[i] = rhs.ideas[i];
         }
