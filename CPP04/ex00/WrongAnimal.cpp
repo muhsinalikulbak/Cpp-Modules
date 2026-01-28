@@ -3,7 +3,7 @@
     
 WrongAnimal::WrongAnimal()
 {
-    std::cout << "WrongAnimal is created" << std::endl;
+    std::cout << "WrongAnimal Default constructor called" << std::endl;
     type = "WrongAnimal";
 }
 
@@ -15,7 +15,7 @@ WrongAnimal::~WrongAnimal()
 WrongAnimal::WrongAnimal(const WrongAnimal& other)
 {
     std::cout << "WrongAnimal copy constructor  called" << std::endl;
-    *this = other;
+    type = other.type;
 }
 
 WrongAnimal& WrongAnimal::operator = (const WrongAnimal& rhs)
