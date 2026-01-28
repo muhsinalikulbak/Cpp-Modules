@@ -29,13 +29,7 @@ Animal& Animal::operator = (const Animal& rhs)
     return *this;
 }
 
-void Animal::makeSound() const
-{
-    std::cout << "Animal called the makeSound() function" << std::endl;
-}
-
 std::string Animal::getType() const
 {
     return type;
 }
-
