@@ -1,8 +1,8 @@
 #ifndef AMATERIA_HPP
 #define AMATERIA_HPP
 
-#include <string>
 #include "ICharacter.hpp"
+#include <string>
 
 class AMateria
 {
@@ -14,13 +14,13 @@ public:
 
     // Canonic Form
     AMateria();
-    ~AMateria();
+    virtual ~AMateria();
     AMateria(const AMateria& other);
     AMateria& operator = (const AMateria& rhs);
 
     // Other Functions
     std::string const & getType() const; //Returns the materia type
-    virtual AMateria* clone() const = 0; // zorunlu implemente
+    virtual AMateria* clone() const = 0;
     virtual void use(ICharacter& target);
 };
 

@@ -38,7 +38,8 @@ std::string const & AMateria::getType() const
     return type;
 }
 
-void use(ICharacter& target)
+void AMateria::use(ICharacter& target)
 {
-
+    // Base implementation - derived classes will override this
+    (void)target;
 }
