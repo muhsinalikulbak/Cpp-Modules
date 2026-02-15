@@ -9,7 +9,7 @@ class Character : public ICharacter
 {
 private:
     std::string name;
-    AMateria* inventory[4];
+    AMateria* inventory[4]; // Materyal Çantası (4 adet)
 
 public:
     // Canonical Form
