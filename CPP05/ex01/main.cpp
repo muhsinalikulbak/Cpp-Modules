@@ -5,7 +5,7 @@ int main()
     // Valid bureaucrat
     try
     {
-        Bureaucrat b("Muhsin", 75);
+        Bureaucrat b("Ali", 75);
         std::cout << b << std::endl;
         b.incrementGrade();
         std::cout << b << std::endl;
@@ -18,7 +18,7 @@ int main()
     // Grade too high (0)
     try
     {
-        Bureaucrat b("Ali", 0);
+        Bureaucrat b("Mehmet", 0);
     }
     catch(const std::exception& e)
     {
@@ -50,7 +50,7 @@ int main()
     // Decrement exception (grade 150)
     try
     {
-        Bureaucrat b("Hüseyin", 150);
+        Bureaucrat b("Elif", 150);
         std::cout << b << std::endl;
         b.decrementGrade();
     }
