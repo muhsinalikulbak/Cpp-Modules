@@ -1,58 +1,82 @@
 #include "Bureaucrat.hpp"
+#include "Form.hpp"
 
 int main()
 {
-    // Valid bureaucrat
+
+
+
+    std::cout << "\n=== FORM TESTS ===" << std::endl;
+    
+    // Valid form
     try
     {
-        Bureaucrat b("Ali", 75);
-        std::cout << b << std::endl;
-        b.incrementGrade();
-        std::cout << b << std::endl;
+        Form form1("Tax Form", 50, 25);
+        std::cout << form1 << std::endl;
     }
     catch(const std::exception& e)
     {
         std::cerr << "Error: " << e.what() << std::endl;
     }
 
-    // Grade too high (0)
+    // Form grade too high
     try
     {
-        Bureaucrat b("Mehmet", 0);
+        Form form2("Invalid Form", 0, 50);
     }
     catch(const std::exception& e)
     {
         std::cerr << "Error: " << e.what() << std::endl;
     }
 
-    // Grade too low (151)
+    // Form grade too low
     try
     {
-        Bureaucrat b("Fatma", 151);
+        Form form3("Invalid Form", 151, 50);
     }
     catch(const std::exception& e)
     {
         std::cerr << "Error: " << e.what() << std::endl;
     }
 
-    // Increment exception (grade 1)
+    std::cout << "\n=== SIGN FORM TESTS ===" << std::endl;
+    
+    // Successful signing
     try
     {
-        Bureaucrat b("Hasan", 1);
-        std::cout << b << std::endl;
-        b.incrementGrade();
+        Bureaucrat john("John", 30);
+        Form contract("Contract", 50, 25);
+        std::cout << contract << std::endl;
+        john.signForm(contract);
+        std::cout << contract << std::endl;
     }
     catch(const std::exception& e)
     {
         std::cerr << "Error: " << e.what() << std::endl;
     }
 
-    // Decrement exception (grade 150)
+    // Failed signing - grade too low
     try
     {
-        Bureaucrat b("Elif", 150);
-        std::cout << b << std::endl;
-        b.decrementGrade();
+        Bureaucrat intern("Intern", 100);
+        Form importantDoc("Important Document", 50, 25);
+        std::cout << importantDoc << std::endl;
+        intern.signForm(importantDoc);
+        std::cout << importantDoc << std::endl;
+    }
+    catch(const std::exception& e)
+    {
+        std::cerr << "Error: " << e.what() << std::endl;
+    }
+
+    // Edge case -  
+    try
+    {
+        Bureaucrat exactGrade("Exact", 75);
+        Form edgeForm("Edge Case Form", 75, 50);
+        std::cout << edgeForm << std::endl;
+        exactGrade.signForm(edgeForm);
+        std::cout << edgeForm << std::endl;
     }
     catch(const std::exception& e)
     {
