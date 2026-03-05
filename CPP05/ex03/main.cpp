@@ -1,48 +1,34 @@
 #include "Bureaucrat.hpp"
-#include "AForm.hpp"
-#include "PresidentialPardonForm.hpp"
-#include "RobotomyRequestForm.hpp"
-#include "ShrubberyCreationForm.hpp"
+#include "Intern.hpp"
 
 int main()
 {
-    try
-    {
-        // Test ShrubberyCreationForm
-        std::cout << "\n=== Testing ShrubberyCreationForm ===" << std::endl;
-        Bureaucrat bob("Bob", 100);
-        ShrubberyCreationForm shrub("home");
-        std::cout << shrub << std::endl;
-        bob.signForm(shrub);
-        bob.executeForm(shrub);
+    Intern intern;
+    Bureaucrat boss("Boss", 1);
 
-        // Test RobotomyRequestForm
-        std::cout << "\n=== Testing RobotomyRequestForm ===" << std::endl;
-        Bureaucrat alice("Alice", 40);
-        RobotomyRequestForm robot("Bender");
-        std::cout << robot << std::endl;
-        alice.signForm(robot);
-        alice.executeForm(robot);
+    std::cout << "--- Gecerli form isimleri ---" << std::endl;
+    AForm* f1 = intern.makeForm("robotomy request", "Bender");
+    AForm* f2 = intern.makeForm("presidential pardon", "Arthur Dent");
+    AForm* f3 = intern.makeForm("shrubbery creation", "home");
 
-        // Test PresidentialPardonForm
-        std::cout << "\n=== Testing PresidentialPardonForm ===" << std::endl;
-        Bureaucrat charlie("Charlie", 1);
-        PresidentialPardonForm pardon("Arthur Dent");
-        std::cout << pardon << std::endl;
-        charlie.signForm(pardon);
-        charlie.executeForm(pardon);
+    std::cout << "\n--- Formlar imzalanip execute ediliyor ---" << std::endl;
+    boss.signForm(*f1);
+    boss.executeForm(*f1);
 
-        // Test with low grade bureaucrat
-        std::cout << "\n=== Testing with low grade ===" << std::endl;
-        Bureaucrat dave("Dave", 150);
-        PresidentialPardonForm pardon2("Ford Prefect");
-        dave.signForm(pardon2);
-        dave.executeForm(pardon2);
-    }
-    catch (std::exception& e)
-    {
-        std::cout << "Exception: " << e.what() << std::endl;
-    }
+    boss.signForm(*f2);
+    boss.executeForm(*f2);
 
+    boss.signForm(*f3);
+    boss.executeForm(*f3);
+
+    std::cout << "\n--- Gecersiz form ismi ---" << std::endl;
+    AForm* f4 = intern.makeForm("coffee request", "Bender");
+
+    delete f1;
+    delete f2;
+    delete f3;
+    if (f4)
+        delete f4;
+    
     return 0;
 }
