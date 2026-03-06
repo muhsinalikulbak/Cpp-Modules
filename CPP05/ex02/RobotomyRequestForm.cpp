@@ -34,9 +34,16 @@ RobotomyRequestForm::~RobotomyRequestForm()
 
 void RobotomyRequestForm::performAction() const
 {
+    static bool seed = true;
+
+    if (seed)
+    {
+        std::srand(std::time(0));
+        seed = false;
+    }
+
     std::cout << "* drilling noises *" << std::endl;
-    
-    std::srand(std::time(0));
+
     if (std::rand() % 2 == 0)
         std::cout << _target << " has been robotomized successfully!" << std::endl;
     else
