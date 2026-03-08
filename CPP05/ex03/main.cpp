@@ -6,12 +6,12 @@ int main()
     Intern intern;
     Bureaucrat boss("Boss", 1);
 
-    std::cout << "--- Gecerli form isimleri ---" << std::endl;
+    std::cout << "--- valid form names ---" << std::endl;
     AForm* f1 = intern.makeForm("robotomy request", "Bender");
     AForm* f2 = intern.makeForm("presidential pardon", "Arthur Dent");
     AForm* f3 = intern.makeForm("shrubbery creation", "home");
 
-    std::cout << "\n--- Formlar imzalanip execute ediliyor ---" << std::endl;
+    std::cout << "\n--- Executing forms ---" << std::endl;
     boss.signForm(*f1);
     boss.executeForm(*f1);
 
@@ -21,7 +21,7 @@ int main()
     boss.signForm(*f3);
     boss.executeForm(*f3);
 
-    std::cout << "\n--- Gecersiz form ismi ---" << std::endl;
+    std::cout << "\n--- Invalid form name ---" << std::endl;
     AForm* f4 = intern.makeForm("coffee request", "Bender");
 
     delete f1;

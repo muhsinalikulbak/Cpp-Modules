@@ -31,7 +31,6 @@ AForm& AForm::operator=(const AForm& other)
 
 AForm::~AForm()
 {
-	std::cout << "Destructor Called" << std::endl;
 }
 
 const std::string& AForm::getName() const
@@ -79,4 +78,19 @@ std::ostream& operator<<(std::ostream& os, const AForm& rhs)
        << ", grade to sign: " << rhs.getGradeToSign()
        << ", grade to execute: " << rhs.getGradeToExecute() << ")";
     return os;
+}
+
+const char* AForm::GradeTooHighException::what() const throw()
+{
+    return "Grade is too high!";
+}
+
+const char* AForm::GradeTooLowException::what() const throw()
+{
+    return "Grade is too low!";
+}
+
+const char* AForm::FormNotSignedException::what() const throw()
+{
+    return "Form is not signed!";
 }

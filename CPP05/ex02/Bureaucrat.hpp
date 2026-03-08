@@ -29,17 +29,13 @@ public:
     class GradeTooHighException : public std::exception
     {
         public:
-            virtual const char* what() const throw() {
-                return "The bureaucrat's score is very high (cannot be less than 1)!";
-            }
+            virtual const char* what() const throw();
     };
 
     class GradeTooLowException : public std::exception
     {
         public:
-            virtual const char* what() const throw(){
-                return "The bureaucrat's score is too low (cannot be greater than 150)!";
-            }
+            virtual const char* what() const throw();
     };
 };
 
