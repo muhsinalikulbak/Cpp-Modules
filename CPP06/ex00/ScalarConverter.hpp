@@ -10,31 +10,32 @@
 
 class ScalarConverter
 {
-    typedef enum e_type_status  // Parse fonksiyonları status döndürsün, ona göre ayarla.
+public:
+    static void convert(const std::string& str);
+
+private:
+    typedef enum e_TypeStatus
     {
         VALID,
         IMPOSSIBLE,
         NON_DISPLAYABLE,
-        OVERFLOW_ERR
-    } status;
+        INVALID_INPUT,
+        NOT_A_NUM,
+        INFINITY_NUM
+    } TypeStatus;
 
-private:
     ScalarConverter();
-    static bool intTryParse(double num);
-    static bool doubleTryParse(const std::string& str, double& ref);
-    static bool floatTryParse(double num);
-    static bool charTryParse(double num);
+    static TypeStatus intTryParse(double num);
+    static TypeStatus doubleTryParse(const std::string& str, double& ref);
+    static TypeStatus floatTryParse(double num);
+    static TypeStatus charTryParse(double num);
 
-    static void printInt(int num);
-    static void printDouble(double num);
-    static void printFloat(float num);
-    static void printChar(char ch);
-    static void printImpossible(const std::string& type);
-    static void printSpecial(const std::string& str);
+    static void printInt(double num);
+    static void printDouble(double num, TypeStatus st);
+    static void printFloat(double num);
+    static void printChar(double num);
+    static void printSpecial(const std::string& type, const std::string& str);
 
-    static bool checkSpecial(double num);
-public:
-    static void convert(const std::string& str);
 };
 
 #endif
