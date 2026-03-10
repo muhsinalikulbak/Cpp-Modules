@@ -1,60 +1,36 @@
 #include "ScalarConverter.hpp"
 
 
-bool ScalarConverter::checkDigit(const std::string& str)
-{
-    int dotCount = 0;
-    int fCount = 0;
-    int plusCount = 0;
-    int minusCount = 0;
-
-
-    for (size_t i = 0; i < str.length(); i++)
-    {
-        if (str[i] == '.')
-            dotCount++;
-        else if (str[i] == 'f')
-            fCount++;
-        else if (plusCount == '+')
-            plusCount++;
-        else if (minusCount == '-')
-            minusCount++;
-    }
-
-    if (dotCount > 1 || fCount > 1 || plusCount > 1 || minusCount > 1)
-        return false;
-    if (minusCount == 1 && plusCount == 1)
-        return false;
-    if (minusCount == 1 && str[0] != '-')
-        return false;
-    if (plusCount == 1 && str[0] != '+')
-        return false;
-    if (dotCount == 1 && (str[0] == '.' || str[str.length() - 1] == '.'))
-        return false;
-    if (fCount == 1 && str[str.length() - 1] != 'f')
-        return false;
-    return true;
-}
-
-bool ScalarConverter::intTryParse(const std::string& str, int& ref)
+bool ScalarConverter::intTryParse(double num)
 {
 
 }
 
 bool ScalarConverter::doubleTryParse(const std::string& str, double& ref)
 {
-    // strtod (string to double) ve isinf kullan.
-    // strtod da diyelim ki double değerini aştı
-    // isinf bunu fark eder.
-    // Double impossable ise hepsi impossible'dır.
+    char* end = NULL;
+    std::string s;
+
+    ref = strtod(str.c_str(), &end);
+    s = end;
+
+    if (s.length() > 1 || (s.length() == 1 && s[0] != 'f'))
+    {
+        printImpossible("double");
+        printImpossible("float");
+        printImpossible("int");
+        printImpossible("char");
+        return false;
+    }
+    return true;
 }
 
-bool ScalarConverter::floatTryParse(const std::string& str, float& ref)
+bool ScalarConverter::floatTryParse(double num)
 {
 
 }
 
-bool ScalarConverter::charTryParse(const std::string& str, char& ref)
+bool ScalarConverter::charTryParse(double num)
 {
 
 }
@@ -79,45 +55,65 @@ void ScalarConverter::printChar(char ch)
 
 }
 
-void ScalarConverter::printImpossible()
+void ScalarConverter::printImpossible(const std::string& type)
 {
-
+    std::cout << type << ": Impossible" << std::endl;
 }
 
+void ScalarConverter::printSpecial(const std::string& str)
+{
+    std::cout << str << std::endl;
+}
+
+bool ScalarConverter::checkSpecial(double num)
+{
+    if (std::isnan(num))
+    {
+        // Gerekli çıktılar yazdırılacak
+        printSpecial("NAN");
+        return false;
+    }
+    else if (std::isinf(num))
+    {
+        // Gerekli çıktılar yazdırılacak
+        printSpecial("INF");
+        return false;
+    }
+    return true;
+}
+
+
+// Bu egzersiz çevriliyorsa hepsini yazdırıyor.
+// Eğer sayıyı getirmemizi isteyseydi ilgili fonksiyon içinde double check yapılıp
+// Ardından ilgili tipe (Örneğin int) cast yapılırdı.
+// Cast yapılabilirse integer değer geri döndürülürdü.
+// Cast yapılamıyorsa hata çıktısı verilir
 
 void ScalarConverter::convert(const std::string& str)
 {
-    int intNum = 0;
     double doubleNum = 0;
-    float floatNum = 0;
-    char ch = '\0';
 
-    if (str == "nanf" || str == "nan")
+    if (str.length() == 1 && !isdigit(str[0]))  // Burada length fonksiyonu std:: ile kullanılamıyor mu ?
     {
-
-    }
-    else if (str.length() == 1)
-    {
-        // Burada bu  0-256 arası bir karakter olduğu anlamına gelir ona göre yazdırma yapılıcak.
-    }
-    else if (!checkDigit(str))
-    {
-        // print error ve return ile çık
+        // Tek bir karakterse ve rakam değilse char için char tipte, diğer tipleri ise ASCII tipte yazdırılacak
+        // Printable olmayanlar karakterlerde char kısmı yazdırırken char: Non displayable çıktısı verilecek.
+        return ;
     }
 
-    if (doubleTryParse(str, doubleNum))
-        ;// Yazdır
-    // Değilse impossible yaz
+    if (!doubleTryParse(str, doubleNum))
+        return ;
     
+    if (checkSpecial(doubleNum))
+        return;
 
+    printDouble(doubleNum);
+
+    if (floatTryParse(doubleNum))
+        printDouble(doubleNum);
+    // else
     
-
-    // önce nan nanf kontrolleri yap, (Araştır)
-    // Eğer nan , nanf ise yazdır çık.
-    // Değilse double convert dene ve errno kontrol et.
-    // Double olabiliyorsa tek tek dönüşümleri yap.
-    // Double olamıyorsa hepsi imposseble
+    // if (intTryParse(doubleNum))
+        
+    
+    
 }
-
-
-// Eğer uzunluk tek karakter ise 
