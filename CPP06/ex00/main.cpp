@@ -6,20 +6,33 @@
 #include <string>
 #include "ScalarConverter.hpp"
 
+#include <stdio.h>
+
 int main()
 {
-//     char* end = NULL;
-//     std::string str = "inff";
-//     float num = strtof(str.c_str(), &end);
 
-//     if (isnanf(num))
-//         std::cout << "selam" << std::endl;
-    
-//     std::string s = end;
-//     std::cout << s << std::endl;
-//     if (s[0] == '\0')
-//         std::cout << "a" << std::endl;
+    ScalarConverter::convert("sdlkflsdf");
+    std::cout << "--------" << std::endl;
+    ScalarConverter::convert("123");
+    std::cout << "--------" << std::endl;
 
-    ScalarConverter::convert("nanf");
-    
+    ScalarConverter::convert("ç");
+    std::cout << "--------" << std::endl;
+
+    ScalarConverter::convert("ğ");
+    std::cout << "--------" << std::endl;
+
+    ScalarConverter::convert("a");
+    std::cout << "--------" << std::endl;
+
+    ScalarConverter::convert("");
+    std::cout << "--------" << std::endl;
+
+
+    ScalarConverter::convert("33333333333");
+    std::cout << "--------" << std::endl;
+
+    ScalarConverter::convert("333333333333333333333333333333333");
+    std::cout << "--------" << std::endl;
+
 }

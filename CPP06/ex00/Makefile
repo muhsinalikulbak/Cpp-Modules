@@ -1,8 +1,9 @@
 NAME = scalarconvert
 
 CXX = c++
-CXXFLAGS =  -std=c++98
-# -Wall -Wextra -Werror 
+
+CXXFLAGS = -Wall -Wextra -Werror -std=c++98
+
 SRCS = main.cpp \
        ScalarConverter.cpp \
 
