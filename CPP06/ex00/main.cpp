@@ -1,38 +1,15 @@
+#include <iostream>
 
-#include <cmath>
-#include <iostream> 
-#include <math.h>
-#include <stdio.h>
-#include <string>
 #include "ScalarConverter.hpp"
 
-#include <stdio.h>
-
-int main()
+int main(int argc, char** argv)
 {
+    if (argc != 2)
+    {
+        std::cout << "Usage: ./scalarconvert <literal>" << std::endl;
+        return 1;
+    }
 
-    ScalarConverter::convert("sdlkflsdf");
-    std::cout << "--------" << std::endl;
-    ScalarConverter::convert("123");
-    std::cout << "--------" << std::endl;
-
-    ScalarConverter::convert("ç");
-    std::cout << "--------" << std::endl;
-
-    ScalarConverter::convert("ğ");
-    std::cout << "--------" << std::endl;
-
-    ScalarConverter::convert("a");
-    std::cout << "--------" << std::endl;
-
-    ScalarConverter::convert("");
-    std::cout << "--------" << std::endl;
-
-
-    ScalarConverter::convert("33333333333");
-    std::cout << "--------" << std::endl;
-
-    ScalarConverter::convert("333333333333333333333333333333333");
-    std::cout << "--------" << std::endl;
-
+    ScalarConverter::convert(argv[1]);
+    return 0;
 }
