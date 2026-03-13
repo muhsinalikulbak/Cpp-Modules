@@ -16,7 +16,7 @@ ScalarConverter::TypeStatus ScalarConverter::intTryParse(double num)
 ScalarConverter::TypeStatus ScalarConverter::doubleTryParse(const std::string& str, double& ref)
 {
     
-    if (str.length() == 1 && !isdigit(str[0]))
+    if (str.length() == 1 && !std::isdigit(str[0]))
     {
         ref = static_cast<double>(str[0]);
         return VALID;
@@ -25,7 +25,7 @@ ScalarConverter::TypeStatus ScalarConverter::doubleTryParse(const std::string& s
     char* end = NULL;
     std::string s;
     
-    ref = strtod(str.c_str(), &end);
+    ref = std::strtod(str.c_str(), &end);
     s = end;
     
     if (s.length() > 1 || (s.length() == 1 && (s[0] != 'f' && s[0] != 'F')))
@@ -123,8 +123,6 @@ void ScalarConverter::convert(const std::string& str)
     double doubleNum = 0;
     TypeStatus doubleStatus = doubleTryParse(str, doubleNum); 
 
-
-    // Burada str.Length == 0 kontrolü eklenbilir
     if (doubleStatus == INVALID_INPUT)
     {
         printSpecial("double", "Invalid Input");
@@ -138,6 +136,4 @@ void ScalarConverter::convert(const std::string& str)
     printFloat(doubleNum);
     printInt(doubleNum);
     printChar(doubleNum);
-
-
 }

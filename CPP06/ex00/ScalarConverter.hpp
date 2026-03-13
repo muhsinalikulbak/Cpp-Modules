@@ -6,6 +6,8 @@
 #include <cmath>
 #include <math.h>
 #include <limits>
+#include <cctype>
+#include <cstdlib>
 
 
 class ScalarConverter
