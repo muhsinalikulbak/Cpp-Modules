@@ -147,7 +147,7 @@ void ScalarConverter::printSpecial(const std::string& type, const std::string& s
 void ScalarConverter::convert(const std::string& str)
 {
     double doubleNum = 0.0;
-    TypeStatus doubleStatus = doubleTryParse(str, doubleNum);
+    const TypeStatus doubleStatus = doubleTryParse(str, doubleNum);
 
     if (doubleStatus == INVALID_INPUT)
     {

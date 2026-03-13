@@ -3,8 +3,10 @@ NAME = bureaucrat
 CXX = c++
 CXXFLAGS =  -Wall -Wextra -Werror -std=c++98
 
-SRCS = main.cpp \
-	   Serializer.cpp \
+SRCS =	main.cpp \
+		Serializer.cpp \
+		Data.cpp \
+
 
 OBJS_DIR = obj
 OBJS = $(addprefix $(OBJS_DIR)/, $(SRCS:.cpp=.o))
