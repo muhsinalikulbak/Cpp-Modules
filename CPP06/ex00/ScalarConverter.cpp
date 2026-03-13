@@ -57,7 +57,7 @@ ScalarConverter::TypeStatus ScalarConverter::charTryParse(double num)
     if (std::isnan(num) || std::isinf(num))
         return IMPOSSIBLE;
 
-    if (num > std::numeric_limits<char>::max() || num < std::numeric_limits<char>::min())
+    if (num > std::numeric_limits<unsigned char>::max() || num < std::numeric_limits<unsigned char>::min())
         return IMPOSSIBLE;
     return VALID;
 }
@@ -127,8 +127,8 @@ void ScalarConverter::printChar(double num)
 
     if (st == VALID)
     {
-        char ch = static_cast<char>(num);
-        if (std::isprint(static_cast<unsigned char>(ch)))
+        char ch = static_cast<unsigned char>(num);
+        if (std::isprint(ch))
             std::cout << "char: '" << ch << "'" << std::endl;
         else
             std::cout << "char: Non displayable" << std::endl;
