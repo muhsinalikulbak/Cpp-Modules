@@ -1,16 +1,17 @@
 #ifndef DATA_HPP
 #define DATA_HPP
 
-class Data
-{
-private:
+#include <string>
 
-public:
-    Data(/* args */);
+struct Data 
+{
+    int         idNumber;
+    std::string name;
+    float       value;
+
+    Data(int id);
+    Data();
     ~Data();
 };
 
-
-
-
-#endif 
+#endif

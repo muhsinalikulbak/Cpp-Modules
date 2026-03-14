@@ -1,4 +1,4 @@
-NAME = bureaucrat
+NAME = serialize
 
 CXX = c++
 CXXFLAGS =  -Wall -Wextra -Werror -std=c++98
@@ -6,6 +6,9 @@ CXXFLAGS =  -Wall -Wextra -Werror -std=c++98
 SRCS =	main.cpp \
 		Serializer.cpp \
 		Data.cpp \
+
+HEADERS = Data.hpp \
+		  Serializer.hpp
 
 
 OBJS_DIR = obj
