@@ -27,6 +27,10 @@ private:
     } TypeStatus;
 
     ScalarConverter();
+    ScalarConverter(const ScalarConverter& other);
+    ScalarConverter& operator=(const ScalarConverter& other);
+    ~ScalarConverter();
+
     static TypeStatus intTryParse(double num);
     static TypeStatus doubleTryParse(const std::string& str, double& ref);
     static TypeStatus floatTryParse(double num);
