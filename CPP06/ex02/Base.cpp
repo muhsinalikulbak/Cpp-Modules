@@ -1,6 +1,11 @@
 #include "Base.hpp"
+#include "A.hpp"
+#include "B.hpp"
+#include "C.hpp"
 #include <cstdlib>
 #include <ctime>
+#include <iostream>
+#include <typeinfo>
 
 Base::Base()
 {
@@ -21,6 +26,7 @@ Base * generate(void)
     func[0] = createA;
     func[1] = createB;
     func[2] = createC;
+    
 
     if (seed)
     {
@@ -34,12 +40,54 @@ Base * generate(void)
 
 void  identify(Base* p)
 {
-    // Girilen pointer'ın hangi nesne olduğu (A, B, C) print edilicek.
+    std::cout << "Type is ";
+
+    if (p == NULL)
+        std::cout << "null" << std::endl;
+    else if (dynamic_cast<A*>(p))
+        std::cout << "A" << std::endl;
+    else if (dynamic_cast<B*>(p))
+        std::cout << "B" << std::endl;
+    else if (dynamic_cast<C*>(p))
+        std::cout << "C" << std::endl;
+    else
+        std::cout << "unknown" << std::endl;
 }
 
 void  identify(Base& p)
 {
-    // Girilen referansın hangi nesne olduğu (A, B, C) print edilecek
+    std::cout << "Type is ";
+
+    try
+    {
+        dynamic_cast<A&>(p);
+        std::cout << "A" << std::endl;
+        return ;
+    }
+    catch(const std::bad_cast&)
+    {
+    }
+
+    try
+    {
+        dynamic_cast<B&>(p);
+        std::cout << "B" << std::endl;
+        return ;
+    }
+    catch(const std::bad_cast&)
+    {
+    }
+
+    try
+    {
+        dynamic_cast<C&>(p);
+        std::cout << "C" << std::endl;
+        return ;
+    }
+    catch(const std::bad_cast&)
+    {
+        std::cout << "unknown" << std::endl;
+    }
 }
 
 // Burada cast işlemleri gerçek tür öğrenilecek
@@ -47,7 +95,7 @@ void  identify(Base& p)
 
 Base* createA()
 {
-    return new C();
+    return new A();
 }
 
 Base* createB()

@@ -1,13 +1,19 @@
-NAME = serialize
+NAME = dynamiccast
 
 CXX = c++
 CXXFLAGS =  -Wall -Wextra -Werror -std=c++98
 
 SRCS =	main.cpp \
+		A.cpp \
+		B.cpp \
+		C.cpp \
+		Base.cpp \
 
 
-HEADERS = Data.hpp \
-		  Serializer.hpp
+HEADERS = A.hpp \
+		  B.hpp \
+		  C.hpp \
+		  Base.hpp
 
 
 OBJS_DIR = obj
@@ -19,26 +25,26 @@ OBJS = $(addprefix $(OBJS_DIR)/, $(SRCS:.cpp=.o))
 
 all: $(NAME)
 
-$(NAME): $(OBJS_DIR) $(OBJS)
-	@echo "✅ Compiling $(NAME).."
+$(NAME): $(OBJS) 
+	@echo "Compiling $(NAME).."
 	$(CXX) $(CXXFLAGS) -o $(NAME) $(OBJS)
-	@echo "✅ $(NAME) Ready!"
+	@echo "$(NAME) ready!"
 
-$(OBJS_DIR)/%.o: %.cpp $(HEADERS)
+$(OBJS_DIR)/%.o: %.cpp $(HEADERS) | $(OBJS_DIR)
 	$(CXX) $(CXXFLAGS) -c $< -o $@
 
 $(OBJS_DIR):
 	mkdir -p $(OBJS_DIR)
 
 clean:
-	@echo "🧹 Cleaning objects..."
+	@echo "Cleaning objects..."
 	rm -rf $(OBJS_DIR)
-	@echo "✅ Objects cleaned!"
+	@echo "Objects cleaned!"
 
 fclean: clean
-	@echo "🧹 Removing executable..."
+	@echo "Removing executable..."
 	rm -f $(NAME)
-	@echo "✅ Full clean done!"
+	@echo "Full clean done!"
 
 re: fclean all
 
