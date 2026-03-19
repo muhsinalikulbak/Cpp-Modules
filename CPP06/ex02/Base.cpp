@@ -26,7 +26,7 @@ Base * generate(void)
     func[0] = createA;
     func[1] = createB;
     func[2] = createC;
-    
+
 
     if (seed)
     {
