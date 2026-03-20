@@ -7,6 +7,8 @@ template <typename T, typename F, typename S>
 
 void iter (T* array, const S& size, F function)
 {
+    size_t s;
+
     try
     {
         if (size < 0)
@@ -29,7 +31,9 @@ void iter (T* array, const S& size, F function)
         return;
     }
     
-    for (size_t i = 0; i < static_cast<size_t>(size); i++)
+    s = static_cast<size_t>(size);
+
+    for (size_t i = 0; i < s; i++)
         function(array[i]);
 }
 
