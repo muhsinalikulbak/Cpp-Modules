@@ -10,7 +10,7 @@ class Array
 private:
 	unsigned int _size;
 	T* _elements;
-	
+
 public:
 	Array();
 	Array(unsigned int n);
@@ -25,5 +25,8 @@ public:
 	unsigned int size() const;
 };
 #include "Array.tpp"
+
+// Array.tpp dosyasının içindeki kodlar, Array sınıfının tanımına ihtiyaç duyar.
+// Eğer en üstte include etseydiniz, Array.tpp derlenmeye çalışırken henüz Array sınıfı tanımlanmamış olacağı için derleyici hata verecekti.
 
 #endif

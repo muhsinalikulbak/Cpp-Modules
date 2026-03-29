@@ -54,7 +54,6 @@ Array<T>& Array<T>::operator = (const Array<T>& rhs)
 template <typename T>
 T& Array<T>::operator [] (unsigned int index)
 {
-
     if (!_elements || index >= _size)
         throw std::out_of_range("Index out of bounds!");
 

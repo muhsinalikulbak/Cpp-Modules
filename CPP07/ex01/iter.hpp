@@ -11,15 +11,6 @@ void iter (T* array, const S& size, F function)
     {
         if (size < 0)
             throw std::out_of_range("Size cannot be negative!");
-    }
-    catch(const std::exception& e)
-    {
-        std::cerr << e.what() << '\n';
-        return;
-    }
-    
-    try
-    {
         if (array == NULL)
             throw std::invalid_argument("Array pointer is null!");
     }
