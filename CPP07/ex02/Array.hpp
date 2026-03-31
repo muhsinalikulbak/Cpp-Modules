@@ -27,6 +27,6 @@ public:
 #include "Array.tpp"
 
 // Array.tpp dosyasının içindeki kodlar, Array sınıfının tanımına ihtiyaç duyar.
-// Eğer en üstte include etseydiniz, Array.tpp derlenmeye çalışırken henüz Array sınıfı tanımlanmamış olacağı için derleyici hata verecekti.
+// Eğer en üstte include etseydik, Array.tpp derlenmeye çalışırken henüz Array sınıfı tanımlanmamış olacağı için derleyici hata verecekti.
 
 #endif

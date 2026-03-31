@@ -19,7 +19,7 @@ void iter (T* array, const S& size, F function)
         std::cerr << e.what() << '\n';
         return;
     }
-    
+
     size_t s = static_cast<size_t>(size);
 
     for (size_t i = 0; i < s; i++)

@@ -2,11 +2,10 @@
 #include "Array.hpp"
 
 
-
-
-
-int main() {
-    try {
+int main() 
+{
+    try 
+    {
         std::cout << "--- Basic Construction & Access ---" << std::endl;
         Array<int> numbers(3);
         numbers[0] = 10;
@@ -16,7 +15,6 @@ int main() {
 
         std::cout << "\n--- Const Access Test ---" << std::endl;
         const Array<int> constNumbers(3);
-        constNumbers[0] = 5;
         std::cout << constNumbers[0] << std::endl;
 
         std::cout << "\n--- Deep Copy Test (Copy Constructor) ---" << std::endl;
@@ -35,7 +33,9 @@ int main() {
         std::cout << "\n--- Out of Bounds Test ---" << std::endl;
         std::cout << numbers[5] << std::endl;
 
-    } catch (const std::exception& e) {
+    } 
+    catch (const std::exception& e)
+    {
         std::cerr << "Exception caught: " << e.what() << std::endl;
     }
 
