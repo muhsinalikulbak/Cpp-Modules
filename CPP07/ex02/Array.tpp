@@ -69,7 +69,6 @@ const T& Array<T>::operator [] (unsigned int index) const
     return _elements[index];
 }
 
-
 template <typename T>
 unsigned int Array<T>::size() const
 {
