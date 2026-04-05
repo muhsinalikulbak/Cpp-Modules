@@ -35,22 +35,14 @@ void Span::addNumber(int value)
     if (_vector.size() < _size)
         _vector.push_back(value);
     else
-        throw CapacityExceededException();
+        throw NotEnoughSpaceException();
 }
 
-void Span::addRange(size_t size, int value)
-{
-    for (size_t i = 0; i < size; i++)
-    {
-        addNumber(value);
-    }
-    
-}
 
 int Span::shortestSpan()
 {
-    // if (_vector.size() < 2) 
-    //     throw std::runtime_error("Yetersiz eleman!");
+    if (_vector.size() < 2) 
+        throw NotEnoughElementException();
 
     std::vector<int> sorted = _vector;
     std::sort(sorted.begin(), sorted.end());
@@ -66,8 +58,8 @@ int Span::shortestSpan()
 
 int Span::longestSpan()
 {
-    // if (_vector.size() < 2) 
-    //     throw std::runtime_error("Yetersiz eleman!");
+    if (_vector.size() < 2) 
+        throw NotEnoughElementException();
 
     std::vector<int> sorted = _vector;
     std::sort(sorted.begin(), sorted.end());
@@ -75,7 +67,12 @@ int Span::longestSpan()
     return sorted[sorted.size()-1] - sorted[0];
 }
 
-const char* Span::CapacityExceededException::what() const throw()
+const char* Span::NotEnoughSpaceException::what() const throw()
 {
     return "Capacity exceeded!";
+}
+
+const char* Span::NotEnoughElementException::what() const throw()
+{
+    return "Not enough element!";
 }
