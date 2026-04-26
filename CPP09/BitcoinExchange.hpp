@@ -7,7 +7,7 @@
 #include <string>
 #include <map>
 #include <iostream>
-
+#include <sstream>
 class BitcoinExchange
 {
 

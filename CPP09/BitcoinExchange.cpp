@@ -51,7 +51,7 @@ void BitcoinExchange::loadDatabase()
     std::ifstream file("data.csv");
     std::string line;
     std::string date;
-    size_t pos;
+    std::string strValue;
     double value;
 
     if (!file.is_open())
@@ -61,29 +61,47 @@ void BitcoinExchange::loadDatabase()
     {
         if (line.empty())
             continue;
-        if (!checkDelimiter(line))
-            continue;
+
+        std::stringstream ss(line);
+
+        // virgüle kadar her şeyi al
+        std::getline(ss, date, ',');
+
+        // virgülden sonra her şeyi al
+        std::getline(ss, strValue);
+
+        std::stringstream ssValue (strValue);
+
+        if (!(ssValue >> value))
+            std::cerr << "Double convert error!" << std::endl;
         
-        pos = line.find(',');
-        if (pos != std::string::npos)
-        {
-            date = line.substr(0, pos );
-            value = static_cast<float>(line.substr(pos+1));
-        }
-        
-        
+        dateMap[date] = value;
     }
 
 }
 
 void BitcoinExchange::processInput(std::ifstream& file)
 {
+    std::string line;
+    std::string date;
+    std::string value;
+    size_t      pos;
 
-    while (true)
+    while (std::getline(file, line))
     {
         try
         {
-            /*  */
+            if (line.empty())
+                throw std::invalid_argument("Error : ");
+            if (checkDelimiter(line));
+                throw std::invalid_argument("Error : ");
+
+        
+            pos = line.find('|');
+            date = line.substr(0, pos);
+            value = line.substr(pos + 1);
+            
+
         }
         catch(const std::exception& e)
         {
