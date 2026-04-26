@@ -5,12 +5,18 @@
 #include <stdexcept>
 #include <fstream>
 #include <string>
+#include <map>
+#include <iostream>
 
 class BitcoinExchange
 {
 
 private:
-    /* data */
+
+    std::map<std::string, int> dateMap;
+    std::string inputDate;
+    int intputValue;
+    
 public:
     BitcoinExchange();
     BitcoinExchange(const BitcoinExchange& other);
@@ -18,10 +24,15 @@ public:
 
     BitcoinExchange& operator = (const BitcoinExchange& rhs);
 
-    class FileNotFound : public std::exception
+    void loadDatabase();
+    void processInput(std::ifstream& file);
+    
+    bool checkValue(const double& value);
+    bool checkDate(const std::string& date);
+    bool checkDelimiter(const std::string& line);
+    class FileError : public std::exception
     {
         public:
-            FileNotFound(const std::string& filename);
             virtual const char* what() const throw();
     };
 

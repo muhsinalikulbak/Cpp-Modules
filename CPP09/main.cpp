@@ -4,27 +4,29 @@
 
 int main(int argc, char const *argv[])
 {
+    if (argc != 2)
+    {
+        std::cerr << "Error: could not open file." << std::endl;
+        return 1;
+    }
+
     try
     {
-        if (argc != 2)
-            throw std::invalid_argument("Usage: ./bitcoin_exchange <filename>");
-        std::ifstream file;
-        file.exceptions(std::ifstream::failbit);    
-        file.open(argv[1]);
+        std::ifstream file(argv[1]);
+
+        if (!file.is_open())
+            throw BitcoinExchange::FileError();
+            
+        BitcoinExchange btc;
+
+        btc.loadDatabase();
+        btc.processInput(file);
     }
-    catch(const std::ios_base::failure& e)
+    catch(std::exception& ex)
     {
+        std::cerr << ex.what() << std::endl;
         std::cerr << "Error: Could not open file '" << argv[1] << "'\n";
+        return 1;
     }
-    
-    // date | value gelicek.
-    /*
-        Dosya kontrolü yap
-        sonra geçerli date ve value kontrolü yap
-        Ardından csv deki verileri string, int olarak sakla
-        Yani tarih değer olarak.
-        Ardından verilen date kontrolü yap varsa o date'deki value ile sonucu getir
-        Yoksa eğer verilen date'den küçük olan ilk date'i baz alarak işlem yap.
-    */
     return 0;
 }
