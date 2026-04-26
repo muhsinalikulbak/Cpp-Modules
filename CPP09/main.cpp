@@ -6,7 +6,7 @@ int main(int argc, char const *argv[])
 {
     if (argc != 2)
     {
-        std::cerr << "Error: could not open file." << std::endl;
+        std::cerr << "Error: Could not open file." << std::endl;
         return 1;
     }
 
@@ -25,7 +25,6 @@ int main(int argc, char const *argv[])
     catch(std::exception& ex)
     {
         std::cerr << ex.what() << std::endl;
-        std::cerr << "Error: Could not open file '" << argv[1] << "'\n";
         return 1;
     }
     return 0;

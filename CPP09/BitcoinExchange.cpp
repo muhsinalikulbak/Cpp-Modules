@@ -38,12 +38,12 @@ bool BitcoinExchange::checkDelimiter(const std::string& line)
 {
     int count = 0;
 
-    for (int i = 0; i < line.size(); i++)
+    for (size_t i = 0; i < line.size(); i++)
     {
         if (line[i] == '|')
             count++;
     }
-    return count == 1;
+    return count != 1;
 }
 
 void BitcoinExchange::loadDatabase()
@@ -57,6 +57,8 @@ void BitcoinExchange::loadDatabase()
     if (!file.is_open())
         throw BitcoinExchange::FileError();
     
+    std::getline(file, line);
+
     while (std::getline(file, line))
     {
         if (line.empty())
@@ -73,7 +75,7 @@ void BitcoinExchange::loadDatabase()
         std::stringstream ssValue (strValue);
 
         if (!(ssValue >> value))
-            std::cerr << "Float convert error!" << std::endl;
+            std::cerr << "Float convert error! : " + strValue << std::endl;
         
         dateMap[date] = value;
     }
@@ -105,7 +107,7 @@ void BitcoinExchange::processInput(std::ifstream& file)
     std::string date;
     std::string value;
     size_t      pos;
-    Date        d;
+    // Date        d;
 
     while (std::getline(file, line))
     {
@@ -113,7 +115,7 @@ void BitcoinExchange::processInput(std::ifstream& file)
         {
             if (line.empty())
                 throw std::invalid_argument("Error : line is empty");
-            if (checkDelimiter(line));
+            if (checkDelimiter(line))
                 throw std::invalid_argument("Error : unexpected delimiter");
    
             pos = line.find('|');
@@ -121,7 +123,7 @@ void BitcoinExchange::processInput(std::ifstream& file)
             value = trim(line.substr(pos + 1));
             
             isValidValue(value);
-            isValidDate()
+            // isValidDate()
             
 
             
