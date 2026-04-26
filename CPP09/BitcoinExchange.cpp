@@ -2,8 +2,8 @@
 
 BitcoinExchange::BitcoinExchange()
 {
-    inputDate = "";
-    intputValue = 0;
+    date = "";
+    value = 0.0F;
 }
 
 BitcoinExchange::~BitcoinExchange()
@@ -13,8 +13,8 @@ BitcoinExchange::~BitcoinExchange()
 
 BitcoinExchange::BitcoinExchange(const BitcoinExchange& other)
 {
-    this->inputDate = other.inputDate;
-    this->intputValue = other.intputValue;
+    this->date = other.date;
+    this->value = other.value;
     this->dateMap = other.dateMap;
 }
 
@@ -22,8 +22,8 @@ BitcoinExchange& BitcoinExchange::operator = (const BitcoinExchange& rhs)
 {
     if (this != &rhs)
     {
-        this->inputDate = rhs.inputDate;
-        this->intputValue = rhs.intputValue;
+        this->date = rhs.date;
+        this->value = rhs.value;
         this->dateMap = rhs.dateMap;
     }
     return *this;
@@ -43,7 +43,7 @@ bool BitcoinExchange::checkDelimiter(const std::string& line)
         if (line[i] == '|')
             count++;
     }
-    return count == 1;    
+    return count == 1;
 }
 
 void BitcoinExchange::loadDatabase()
@@ -52,7 +52,7 @@ void BitcoinExchange::loadDatabase()
     std::string line;
     std::string date;
     std::string strValue;
-    double value;
+    float value;
 
     if (!file.is_open())
         throw BitcoinExchange::FileError();
@@ -73,11 +73,30 @@ void BitcoinExchange::loadDatabase()
         std::stringstream ssValue (strValue);
 
         if (!(ssValue >> value))
-            std::cerr << "Double convert error!" << std::endl;
+            std::cerr << "Float convert error!" << std::endl;
         
         dateMap[date] = value;
     }
 
+}
+void BitcoinExchange::isValidValue(const std::string& value)
+{
+    char* end = NULL;
+    std::string suffix;
+    float val;
+
+    val = strtof(value.c_str(), &end);
+    if (end == value.c_str())
+        throw std::invalid_argument("Error: bad input =>" + value);
+    
+    if (suffix.length() > 1 || (suffix.length() == 1 && (suffix[0] != 'f' && suffix[0] != 'F')))
+        throw std::invalid_argument("Error: bad input =>" + value);
+    if (std::isnan(val))
+        throw std::invalid_argument("Error : not a number");
+    if (std::isinf(val) || val > 1000)
+        throw std::invalid_argument("Error: too large a number.");
+    if (val < 0)
+        throw std::invalid_argument("Error: not a positive number.");
 }
 
 void BitcoinExchange::processInput(std::ifstream& file)
@@ -86,20 +105,25 @@ void BitcoinExchange::processInput(std::ifstream& file)
     std::string date;
     std::string value;
     size_t      pos;
+    Date        d;
 
     while (std::getline(file, line))
     {
         try
         {
             if (line.empty())
-                throw std::invalid_argument("Error : ");
+                throw std::invalid_argument("Error : line is empty");
             if (checkDelimiter(line));
-                throw std::invalid_argument("Error : ");
-
-        
+                throw std::invalid_argument("Error : unexpected delimiter");
+   
             pos = line.find('|');
-            date = line.substr(0, pos);
-            value = line.substr(pos + 1);
+            date = trim(line.substr(0, pos));
+            value = trim(line.substr(pos + 1));
+            
+            isValidValue(value);
+            isValidDate()
+            
+
             
 
         }
@@ -108,5 +132,13 @@ void BitcoinExchange::processInput(std::ifstream& file)
             std::cerr << e.what() << '\n';
         }
     }
-    
+}
+
+std::string BitcoinExchange::trim(const std::string& str) 
+{
+    size_t first = str.find_first_not_of(" \t\n\r");
+    if (first == std::string::npos) // String tamamen boşluklardan oluşuyorsa
+        return "";
+    size_t last = str.find_last_not_of(" \t\n\r");
+    return str.substr(first, (last - first + 1));
 }

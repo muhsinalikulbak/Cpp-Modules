@@ -8,14 +8,23 @@
 #include <map>
 #include <iostream>
 #include <sstream>
+#include <cmath>
+
+struct Date
+{
+    int year;
+    int month;
+    int day;
+};
+
 class BitcoinExchange
 {
 
 private:
 
     std::map<std::string, int> dateMap;
-    std::string inputDate;
-    int intputValue;
+    std::string date;
+    float value;
     
 public:
     BitcoinExchange();
@@ -27,15 +36,17 @@ public:
     void loadDatabase();
     void processInput(std::ifstream& file);
     
-    bool checkValue(const double& value);
-    bool checkDate(const std::string& date);
+    void isValidValue(const std::string& value);
+    bool isValidDate(int year, int month, int day);
+    std::string trim(const std::string& str);
+
     bool checkDelimiter(const std::string& line);
+
     class FileError : public std::exception
     {
         public:
             virtual const char* what() const throw();
     };
-
 };
 
 
