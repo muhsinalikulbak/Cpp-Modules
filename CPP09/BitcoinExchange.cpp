@@ -101,6 +101,21 @@ void BitcoinExchange::isValidValue(const std::string& value)
         throw std::invalid_argument("Error: not a positive number.");
 }
 
+void BitcoinExchange::isValidDate(const std::string& date)
+{
+    int dashCount = 0;
+    
+    for (size_t i = 0; i < date.size(); i++)
+    {
+        if (date[i] == '-')
+            dashCount++;
+    }
+    if (dashCount != 2 || date.size() > 1 && date[0] == '-' || date[date.size()-1] == '-')
+        throw std::invalid_argument("Error : line is empty");
+    
+    
+}
+
 void BitcoinExchange::processInput(std::ifstream& file)
 {
     std::string line;
