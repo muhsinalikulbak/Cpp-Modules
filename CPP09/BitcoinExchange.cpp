@@ -81,6 +81,43 @@ void BitcoinExchange::loadDatabase()
     }
 
 }
+
+bool BitcoinExchange::isLeapYear(int year) 
+{
+    return (year % 400 == 0) || (year % 4 == 0 && year % 100 != 0);
+}
+
+void BitcoinExchange::isValidDate(const std::string& date)
+{
+    int year;
+    int month;
+    int day;
+    char seperate;
+
+    int months[] = {31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31};
+
+    std::stringstream ss (date);
+    ss >> year;
+    ss >> seperate;
+
+    ss >> month;
+    ss >> seperate;
+    ss >> day;
+
+    if (month > 12 || month == 0)
+        throw std::invalid_argument("Error: bad input");
+
+    if (month != 2 && day > months[month-1])
+        throw std::invalid_argument("Error: bad input");
+
+    if (isLeapYear(year) && month == 2 && day > 29)
+        throw std::invalid_argument("Error: bad input");
+
+    if (!isLeapYear(year) && month == 2 && day > 28)
+        throw std::invalid_argument("Error: bad input");
+
+}
+
 void BitcoinExchange::isValidValue(const std::string& value)
 {
     char* end = NULL;
@@ -122,9 +159,9 @@ void BitcoinExchange::processInput(std::ifstream& file)
 {
     std::string line;
     std::string date;
-    std::string value;
+    std::string strValue;
+    float       value;
     size_t      pos;
-    // Date        d;
 
     while (std::getline(file, line))
     {
@@ -137,14 +174,24 @@ void BitcoinExchange::processInput(std::ifstream& file)
    
             pos = line.find('|');
             date = trim(line.substr(0, pos));
-            value = trim(line.substr(pos + 1));
+            strValue = trim(line.substr(pos + 1));
             
-            isValidValue(value);
-            // isValidDate()
-            
+            isValidValue(strValue);
+            std::stringstream(strValue) >> value;
 
-            
+            isFormatValid(date);
+            isValidDate(date);
 
+            std::map <std::string, float>::iterator it = dateMap.lower_bound(date);
+            if (it != dateMap.end() && it->first == date)
+            {
+                std::cout << date << " => " << value << " = " << value * it->second << std::endl;
+            }
+            else if (it != dateMap.begin())
+            {
+                it--;
+                std::cout << date << " => " << value << " = " << value * it->second << std::endl;
+            }
         }
         catch(const std::exception& e)
         {

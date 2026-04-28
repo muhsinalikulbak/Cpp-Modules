@@ -10,19 +10,12 @@
 #include <sstream>
 #include <cmath>
 
-struct Date
-{
-    int year;
-    int month;
-    int day;
-};
-
 class BitcoinExchange
 {
 
 private:
 
-    std::map<std::string, int> dateMap;
+    std::map<std::string, float> dateMap;
     std::string date;
     float value;
     
@@ -37,7 +30,11 @@ public:
     void processInput(std::ifstream& file);
     
     void isValidValue(const std::string& value);
+    void isValidDate(const std::string& date);
     void isFormatValid(const std::string& date);
+    bool isLeapYear(int year);
+
+
     std::string trim(const std::string& str);
 
     bool checkDelimiter(const std::string& line);
