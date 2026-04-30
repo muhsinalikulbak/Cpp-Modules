@@ -1,5 +1,5 @@
 #ifndef BITCOINEXCHANGE_HPP
-#define BITCOINEXCHANHE_HPP
+#define BITCOINEXCHANGE_HPP
 
 #include <exception>
 #include <stdexcept>
@@ -36,8 +36,6 @@ public:
 
 
     std::string trim(const std::string& str);
-
-    bool checkDelimiter(const std::string& line);
 
     class FileError : public std::exception
     {

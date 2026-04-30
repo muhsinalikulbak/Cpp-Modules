@@ -34,17 +34,6 @@ const char* BitcoinExchange::FileError::what() const throw()
     return "Error: could not open file.";
 }
 
-bool BitcoinExchange::checkDelimiter(const std::string& line)
-{
-    int count = 0;
-
-    for (size_t i = 0; i < line.size(); i++)
-    {
-        if (line[i] == '|')
-            count++;
-    }
-    return count != 1;
-}
 
 void BitcoinExchange::loadDatabase()
 {
@@ -75,7 +64,10 @@ void BitcoinExchange::loadDatabase()
         std::stringstream ssValue (strValue);
 
         if (!(ssValue >> value))
+        {
             std::cerr << "Float convert error! : " + strValue << std::endl;
+            continue;
+        }
         
         dateMap[date] = value;
     }
@@ -105,31 +97,30 @@ void BitcoinExchange::isValidDate(const std::string& date)
     ss >> day;
 
     if (month > 12 || month == 0)
-        throw std::invalid_argument("Error: bad input");
+        throw std::invalid_argument("Error: bad input => " + date);
 
     if (month != 2 && day > months[month-1])
-        throw std::invalid_argument("Error: bad input");
+        throw std::invalid_argument("Error: bad input => " + date);
 
     if (isLeapYear(year) && month == 2 && day > 29)
-        throw std::invalid_argument("Error: bad input");
+        throw std::invalid_argument("Error: bad input => " + date);
 
     if (!isLeapYear(year) && month == 2 && day > 28)
-        throw std::invalid_argument("Error: bad input");
+        throw std::invalid_argument("Error: bad input => " + date);
 
 }
 
 void BitcoinExchange::isValidValue(const std::string& value)
 {
     char* end = NULL;
-    std::string suffix;
     float val;
 
     val = strtof(value.c_str(), &end);
     if (end == value.c_str())
-        throw std::invalid_argument("Error: bad input =>" + value);
+        throw std::invalid_argument("Error: bad input => " + value);
     
-    if (suffix.length() > 1 || (suffix.length() == 1 && (suffix[0] != 'f' && suffix[0] != 'F')))
-        throw std::invalid_argument("Error: bad input =>" + value);
+    if (std::string(end).length() > 0)
+        throw std::invalid_argument("Error: bad input => " + value);
     if (std::isnan(val))
         throw std::invalid_argument("Error : not a number");
     if (std::isinf(val) || val > 1000)
@@ -141,17 +132,17 @@ void BitcoinExchange::isValidValue(const std::string& value)
 void BitcoinExchange::isFormatValid(const std::string& date)
 {
     if (date.length() != 10)
-        throw std::invalid_argument("Error : bad input");
+            throw std::invalid_argument("Error: bad input => " + date);
 
     if (date[4] != '-' || date[7] != '-')
-        throw std::invalid_argument("Error : bad input");
+        throw std::invalid_argument("Error: bad input => " + date);
 
     for (int i = 0; i < 10; i++)
     {
         if (i == 4 || i == 7) 
             continue;
         if (!std::isdigit(date[i]))
-            throw std::invalid_argument("Error : bat input");
+            throw std::invalid_argument("Error: bad input => " + date);
     }
 }
 
@@ -168,11 +159,12 @@ void BitcoinExchange::processInput(std::ifstream& file)
         try
         {
             if (line.empty())
-                throw std::invalid_argument("Error : line is empty");
-            if (checkDelimiter(line))
-                throw std::invalid_argument("Error : unexpected delimiter");
+                continue;
    
             pos = line.find('|');
+            if (pos == std::string::npos)
+                throw std::invalid_argument("Error: bad input => " + line);
+            
             date = trim(line.substr(0, pos));
             strValue = trim(line.substr(pos + 1));
             
@@ -182,16 +174,13 @@ void BitcoinExchange::processInput(std::ifstream& file)
             isFormatValid(date);
             isValidDate(date);
 
-            std::map <std::string, float>::iterator it = dateMap.lower_bound(date);
-            if (it != dateMap.end() && it->first == date)
-            {
-                std::cout << date << " => " << value << " = " << value * it->second << std::endl;
-            }
-            else if (it != dateMap.begin())
-            {
-                it--;
-                std::cout << date << " => " << value << " = " << value * it->second << std::endl;
-            }
+            std::map<std::string, float>::iterator it = dateMap.upper_bound(date);
+
+            if (it == dateMap.begin())
+                throw std::invalid_argument("Error: bad input => " + date);
+            --it;
+
+            std::cout << date << " => " << value << " = " << value * it->second << std::endl;
         }
         catch(const std::exception& e)
         {
@@ -203,7 +192,7 @@ void BitcoinExchange::processInput(std::ifstream& file)
 std::string BitcoinExchange::trim(const std::string& str) 
 {
     size_t first = str.find_first_not_of(" \t\n\r");
-    if (first == std::string::npos) // String tamamen boşluklardan oluşuyorsa
+    if (first == std::string::npos)
         return "";
     size_t last = str.find_last_not_of(" \t\n\r");
     return str.substr(first, (last - first + 1));
