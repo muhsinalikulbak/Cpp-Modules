@@ -17,7 +17,7 @@ private:
 
     std::map<std::string, float> dateMap;
     std::string date;
-    float value;
+    float value; 
     
 public:
     BitcoinExchange();
