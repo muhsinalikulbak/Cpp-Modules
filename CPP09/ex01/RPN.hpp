@@ -4,6 +4,7 @@
 #include <string>
 #include <stack>
 #include <sstream>
+#include <string.h>
 
 class RPN
 {
@@ -15,8 +16,11 @@ public:
     RPN(const RPN& other);
     RPN& operator = (const RPN& rhs);
 
-    bool    checkArguments(std::string argv);
-    int     rpnCalculator(std::string argv);
+
+    bool    checkFormatRpn(std::string& input);
+    bool    checkOperator(std::string& input);
+    int     rpnCalculator(std::string& input);
+    
 };
 
 
