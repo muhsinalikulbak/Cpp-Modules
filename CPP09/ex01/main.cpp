@@ -13,7 +13,10 @@ int main(int argc, char *argv[])
     RPN rpn;
 
     if (!rpn.checkOperator(input) || !rpn.checkFormatRpn(input))
+    {
         std::cout << "Error" << std::endl;
+        return 1;
+    }
 
     int res = rpn.rpnCalculator(input);
     std::cout << "result : " << res << std::endl;
