@@ -4,7 +4,6 @@
 #include <string>
 #include <stack>
 #include <sstream>
-#include <string.h>
 
 class RPN
 {
@@ -17,9 +16,9 @@ public:
     RPN& operator = (const RPN& rhs);
 
 
-    void    checkFormatRpn(std::string& input);
-    void    checkOperator(std::string& input);
-    int     rpnCalculator(std::string& input);
+    static void    checkFormatRpn(std::string& input);
+    static void    checkOperator(std::string& input);
+    static int     rpnCalculator(std::string& input);
 
     class InvalidExpressionException : public std::exception 
     {
@@ -28,7 +27,7 @@ public:
 
         public:
 
-            InvalidExpressionException(const std::string& msg) : _errorMessage(msg) {}
+            InvalidExpressionException(const std::string& msg) throw() : _errorMessage(msg)  {} 
             virtual ~InvalidExpressionException() throw() {}
             virtual const char* what() const throw();
     };

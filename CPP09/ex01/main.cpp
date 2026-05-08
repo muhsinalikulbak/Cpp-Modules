@@ -10,13 +10,12 @@ int main(int argc, char *argv[])
     }
     
 
-    std::string input(argv[1]);
-    RPN rpn;
     try
     {
-        rpn.checkOperator(input);
-        rpn.checkFormatRpn(input);
-        int res = rpn.rpnCalculator(input);
+        std::string input(argv[1]);
+        RPN::checkOperator(input);
+        RPN::checkFormatRpn(input);
+        int res = RPN::rpnCalculator(input);
         
         std::cout << "result : " << res << std::endl;
     }
@@ -24,8 +23,6 @@ int main(int argc, char *argv[])
     {
         std::cerr << e.what() << '\n';
     }
-    
-    
 
     return 0;
 }

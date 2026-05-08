@@ -63,7 +63,7 @@ void    RPN::checkOperator(std::string& input)
             !std::isdigit(input[i]))
                 throw InvalidExpressionException(std::string("Error : Invalid operator : ") + input[i]);            
         if (i + 1 < len && input[i + 1] != ' ')
-                throw InvalidExpressionException("Error : Invalid syntax!");
+                throw InvalidExpressionException("Error : Invalid syntax : ");
         i++;
     }
 }
@@ -118,5 +118,4 @@ const char* RPN::InvalidExpressionException::what() const throw()
 {
     return _errorMessage.c_str();
 }
-
 
