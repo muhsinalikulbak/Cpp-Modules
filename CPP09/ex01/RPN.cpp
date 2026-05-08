@@ -15,34 +15,30 @@ RPN::RPN(const RPN& other)
 RPN& RPN::operator = (const RPN& rhs)
 {
     if (this != &rhs)
-        *this = rhs;
+    {
+
+    }
     return *this;
 }
 
 void RPN::checkFormatRpn(std::string& input)
 {
     int len = input.size();
-    int current = 0;
     int stack = 0;
     int i = 0;
-
 
     while (i < len)
     {
         while (i < len && input[i] == ' ')
             i++;
-        
+
+        if (i == len)
+            break;
+
         if (std::isdigit(input[i]))
-        {
             stack++;
-            current = input[i] - '0';
-        }
         else if (stack > 1)
-        {
-            if (current == 0 && input[i] == '/')
-                throw InvalidExpressionException("Error : Divide by zero error!");
             stack--;
-        }
         else
             throw InvalidExpressionException("Error : Invalid rpn format!");
         i++;
@@ -61,11 +57,12 @@ void    RPN::checkOperator(std::string& input)
         while (i < len && input[i] == ' ')
             i++;
 
-        if (input[i] != '+' && input[i] != '-' &&
+        if (i < len &&
+            input[i] != '+' && input[i] != '-' &&
             input[i] != '*' && input[i] != '/' &&
             !std::isdigit(input[i]))
-                throw InvalidExpressionException("Error : Invalid operator : " + input[i]);            
-        if (i + 1 < input.size() && input[i + 1] != ' ')
+                throw InvalidExpressionException(std::string("Error : Invalid operator : ") + input[i]);            
+        if (i + 1 < len && input[i + 1] != ' ')
                 throw InvalidExpressionException("Error : Invalid syntax!");
         i++;
     }
@@ -83,6 +80,9 @@ int     RPN::rpnCalculator(std::string& input)
     {
         while (i < len && input[i] == ' ')
             i++;
+
+        if (i == len)
+            break;
         
         if (std::isdigit(input[i]))
             numStack.push(input[i] - '0');
@@ -93,20 +93,19 @@ int     RPN::rpnCalculator(std::string& input)
             num1 = numStack.top();
             numStack.pop();
 
-            switch (input[i])
-            {
-                case '+':
+            char ch = input[i];
+
+            if (ch == '+')
                     numStack.push(num1 + num2);
-                    break;
-                case '-':
-                    numStack.push(num1 - num2);
-                    break;
-                case '*':
-                    numStack.push(num1 * num2);
-                    break;
-                case '/':
-                   numStack.push(num1 / num2);
-                   break;
+            else if (ch == '-')
+                numStack.push(num1 - num2);
+            else if (ch == '*')
+                numStack.push(num1 * num2);
+            else if (ch == '/')
+            {
+                if (num2 == 0)
+                    throw InvalidExpressionException("Error : Attempt to divide by zero!");
+                numStack.push(num1 / num2);
             }
         }
         i++;
