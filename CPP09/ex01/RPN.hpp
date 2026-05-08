@@ -17,10 +17,22 @@ public:
     RPN& operator = (const RPN& rhs);
 
 
-    bool    checkFormatRpn(std::string& input);
-    bool    checkOperator(std::string& input);
+    void    checkFormatRpn(std::string& input);
+    void    checkOperator(std::string& input);
     int     rpnCalculator(std::string& input);
-    
+
+    class InvalidExpressionException : public std::exception 
+    {
+        private:
+            std::string _errorMessage;
+
+        public:
+
+            InvalidExpressionException(const std::string& msg) : _errorMessage(msg) {}
+            virtual ~InvalidExpressionException() throw() {}
+            virtual const char* what() const throw();
+    };
+
 };
 
 

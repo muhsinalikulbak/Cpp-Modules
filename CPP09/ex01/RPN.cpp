@@ -19,9 +19,10 @@ RPN& RPN::operator = (const RPN& rhs)
     return *this;
 }
 
-bool RPN::checkFormatRpn(std::string& input)
+void RPN::checkFormatRpn(std::string& input)
 {
     int len = input.size();
+    int current = 0;
     int stack = 0;
     int i = 0;
 
@@ -32,17 +33,25 @@ bool RPN::checkFormatRpn(std::string& input)
             i++;
         
         if (std::isdigit(input[i]))
+        {
             stack++;
+            current = input[i] - '0';
+        }
         else if (stack > 1)
+        {
+            if (current == 0 && input[i] == '/')
+                throw InvalidExpressionException("Error : Divide by zero error!");
             stack--;
+        }
         else
-            return false;
+            throw InvalidExpressionException("Error : Invalid rpn format!");
         i++;
     }
-    return stack == 1;
+    if (stack != 1)
+        throw InvalidExpressionException("Error : Invalid rpn format!");
 }
 
-bool    RPN::checkOperator(std::string& input)
+void    RPN::checkOperator(std::string& input)
 {
     int len = input.size();
     int i = 0;
@@ -55,13 +64,11 @@ bool    RPN::checkOperator(std::string& input)
         if (input[i] != '+' && input[i] != '-' &&
             input[i] != '*' && input[i] != '/' &&
             !std::isdigit(input[i]))
-                return false;
-            
+                throw InvalidExpressionException("Error : Invalid operator : " + input[i]);            
         if (i + 1 < input.size() && input[i + 1] != ' ')
-            return false;
+                throw InvalidExpressionException("Error : Invalid syntax!");
         i++;
     }
-    return true;
 }
 
 int     RPN::rpnCalculator(std::string& input)
@@ -107,4 +114,10 @@ int     RPN::rpnCalculator(std::string& input)
     return numStack.top();
 }
 
-// 5 5 * 6 + 7 -
+
+const char* RPN::InvalidExpressionException::what() const throw()
+{
+    return _errorMessage.c_str();
+}
+
+
