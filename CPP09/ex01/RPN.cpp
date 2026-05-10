@@ -107,7 +107,7 @@ int     RPN::rpnCalculator(std::string& input)
                     throw InvalidExpressionException("Error : Attempt to divide by zero!");
                 numStack.push(num1 / num2);
             }
-        }
+        }   
         i++;
     }
     return numStack.top();
