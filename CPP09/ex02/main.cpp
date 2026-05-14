@@ -8,5 +8,17 @@ int main(int argc, char const *argv[])
         std::cout << "Invalid Argument!" << std::endl;
         return 1;
     }
+
+
+    try
+    {
+        PmergeMe merge;
+        
+    }
+    catch(const std::exception& e)
+    {
+        std::cerr << e.what() << '\n';
+    }
+    
     return 0;
 }
