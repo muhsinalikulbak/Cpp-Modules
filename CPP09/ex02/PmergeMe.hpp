@@ -3,7 +3,7 @@
 
 #include <vector>
 #include <deque>
-#include <utility> // pair için gerekli
+#include <utility>
 #include <iostream>
 #include <sstream>
 #include <cstdlib>
@@ -15,8 +15,12 @@ class PmergeMe
 private:
     std::vector<std::pair<int, int> > vectorPairs;
     std::deque<std::pair<int, int> > dequePairs;
+
+    std::vector<int> mainVector;
+    std::deque<int> maindDeque;
+
     int straggler;
-    bool hasStraggler; // Bu ismi düzelt
+    bool hasStraggler;
 
 public:
     PmergeMe();

@@ -30,6 +30,7 @@ void PmergeMe::dividedIntoPairs(char **argv)
     int i = 1;
     int winner = 0;
     int loser = 0;
+    int temp = 0;
 
     while (argv[i]) 
     {
@@ -43,6 +44,13 @@ void PmergeMe::dividedIntoPairs(char **argv)
             break;
         }
 
+        if (winner < loser)
+        {
+            temp = winner;
+            winner = loser;
+            loser = winner;
+        }
+        
         std::pair<int, int> p(winner, loser);
 
         vectorPairs.push_back(p);
