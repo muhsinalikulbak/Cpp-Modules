@@ -36,7 +36,7 @@ public:
     PmergeMe(const PmergeMe& other);
     ~PmergeMe();
 
-    PmergeMe operator = (const PmergeMe& rhs);
+    PmergeMe& operator = (const PmergeMe& rhs);
 
     void dividedIntoPairs(char **argv);
     void argvCheck(char **argv);

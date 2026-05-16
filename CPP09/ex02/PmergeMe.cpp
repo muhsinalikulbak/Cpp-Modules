@@ -17,7 +17,7 @@ PmergeMe::~PmergeMe()
 }
 
 
-PmergeMe PmergeMe::operator = (const PmergeMe& rhs)
+PmergeMe& PmergeMe::operator = (const PmergeMe& rhs)
 {
     if (this != &rhs)
     {
@@ -62,10 +62,7 @@ void PmergeMe::dividedIntoPairs(char **argv)
         vectorPairs.push_back(p);
         dequePairs.push_back(p);
 
-        i++;
-
-        if (argv[i] && argv[i + 1])
-            i++;
+        i+=2;
     }
             
 }
