@@ -1,7 +1,7 @@
 #include "PmergeMe.hpp"
 #include <iostream>
 
-int main(int argc, char const *argv[])
+int main(int argc, char  *argv[])
 {
     if (argc < 2 || argv == NULL)
     {
@@ -13,6 +13,8 @@ int main(int argc, char const *argv[])
     try
     {
         PmergeMe merge;
+        merge.argvCheck(argv);
+        merge.argvCheck(argv);
         
     }
     catch(const std::exception& e)

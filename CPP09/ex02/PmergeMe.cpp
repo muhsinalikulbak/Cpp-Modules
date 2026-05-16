@@ -1,8 +1,29 @@
 #include "PmergeMe.hpp"
+PmergeMe::PmergeMe()
+{
+
+}
+
+PmergeMe::PmergeMe(const PmergeMe& other)
+{
+    *this = other;
+}
+
+PmergeMe::~PmergeMe()
+{
+
+}
 
 
-
-
+PmergeMe PmergeMe::operator = (const PmergeMe& rhs)
+{
+    if (this != &rhs)
+    {
+        this->dequePairs = rhs.dequePairs;
+        this->vectorPairs = rhs.vectorPairs;
+    }
+    return *this;
+}
 
 void PmergeMe::dividedIntoPairs(char **argv)
 {
@@ -18,7 +39,8 @@ void PmergeMe::dividedIntoPairs(char **argv)
         else
         {
             straggler = winner;
-            continue;;
+            hasStraggler = true;
+            break;
         }
 
         std::pair<int, int> p(winner, loser);
@@ -34,23 +56,29 @@ void PmergeMe::dividedIntoPairs(char **argv)
 void PmergeMe::argvCheck(char **argv)
 {
     int i = 1;
-    int j = 0;
-    long num = 0;
-
-    // Longa çevir overflow'U burada kontrol et.
-            // throw std::invalid_argument("Error: Overflow or invalid conversion");
-
+    long value;
+    char* end;
+    
     while (argv[i])
     {
-        j = 0;
-        if (argv[i][j] == '-')
-            j++;
-        while (argv[i][j])
-        {
-            if (!std::isdigit(argv[i][j]))
-                throw std::invalid_argument("Invalid Argument");
-            j++;
-        }
+        value = std::strtol(argv[i], &end, 10);
+        
+        if (errno == ERANGE)
+            throw std::invalid_argument("Overflow Exception");
+        
+        if (end == argv[i])
+            throw std::invalid_argument(std::string("Invalid Argument: ") + end);
+
+        while (*end != '\0' && *end == ' ')
+            end++;
+
+        if (*end != '\0')
+            throw std::invalid_argument("Invalid Argument: Trailing characters found");
+        
+        if (value > std::numeric_limits<int>::max() || value < std::numeric_limits<int>::min())
+            throw std::invalid_argument("Overflow Exception");
+        if (value < 0)
+            throw std::invalid_argument("Number cannot be negative");        
         i++;
     }
 }

@@ -102,10 +102,10 @@ void BitcoinExchange::isValidDate(const std::string& date)
     if (month != 2 && day > months[month-1])
         throw std::invalid_argument("Error: bad input => " + date);
 
-    if (isLeapYear(year) && month == 2 && day > 29)
+    if (month == 2 && isLeapYear(year) &&  day > 29)
         throw std::invalid_argument("Error: bad input => " + date);
 
-    if (!isLeapYear(year) && month == 2 && day > 28)
+    if (month == 2 && !isLeapYear(year) &&  day > 28)
         throw std::invalid_argument("Error: bad input => " + date);
 
 }
