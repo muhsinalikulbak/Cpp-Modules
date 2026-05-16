@@ -14,7 +14,8 @@ int main(int argc, char  *argv[])
     {
         PmergeMe merge;
         merge.argvCheck(argv);
-        merge.argvCheck(argv);
+        merge.dividedIntoPairs(argv);
+        merge.sortVector();
         
     }
     catch(const std::exception& e)

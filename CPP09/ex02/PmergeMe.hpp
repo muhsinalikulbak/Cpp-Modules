@@ -9,6 +9,15 @@
 #include <cstdlib>
 #include <limits>
 #include <cerrno>
+#include <algorithm>
+
+struct PairComparator
+{
+    bool operator()(const std::pair<int, int>& a, const std::pair<int, int>& b) const
+    {
+        return a.first < b.first;
+    }
+};
 
 class PmergeMe
 {
@@ -17,7 +26,7 @@ private:
     std::deque<std::pair<int, int> > dequePairs;
 
     std::vector<int> mainVector;
-    std::deque<int> maindDeque;
+    std::deque<int> mainDeque;
 
     int straggler;
     bool hasStraggler;
@@ -31,6 +40,8 @@ public:
 
     void dividedIntoPairs(char **argv);
     void argvCheck(char **argv);
+    void sortVector();
+    void sortDeque();
 
 };
 
