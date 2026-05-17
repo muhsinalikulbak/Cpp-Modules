@@ -9,18 +9,15 @@ int main(int argc, char  *argv[])
         return 1;
     }
 
-
     try
     {
         PmergeMe merge;
         merge.argvCheck(argv);
-        merge.dividedIntoPairs(argv);
-        merge.sortVector();
-        
+        merge.run(argv);
     }
     catch(const std::exception& e)
     {
-        std::cerr << e.what() << '\n';
+        std::cerr << "Error" << std::endl;
     }
     
     return 0;

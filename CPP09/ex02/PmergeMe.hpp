@@ -10,6 +10,11 @@
 #include <limits>
 #include <cerrno>
 #include <set>
+#include <algorithm>
+#include <iterator>
+#include <iomanip>
+#include <sys/time.h>
+#include <sys/time.h>
 
 class PmergeMe
 {
@@ -19,6 +24,8 @@ private:
 
     std::vector<int> mainVector;
     std::deque<int> mainDeque;
+    
+    std::vector<int> originalSequence;
 
     int straggler;
     bool hasStraggler;
@@ -34,6 +41,8 @@ public:
     void argvCheck(char **argv);
     void sortVector();
     void sortDeque();
+    void run(char **argv);
+    void display(const std::vector<int>& before, const std::vector<int>& after, double timeVector, double timeDeque);
 
 };
 
