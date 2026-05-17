@@ -9,15 +9,7 @@
 #include <cstdlib>
 #include <limits>
 #include <cerrno>
-#include <algorithm>
-
-struct PairComparator
-{
-    bool operator()(const std::pair<int, int>& a, const std::pair<int, int>& b) const
-    {
-        return a.first < b.first;
-    }
-};
+#include <set>
 
 class PmergeMe
 {
@@ -45,6 +37,6 @@ public:
 
 };
 
-
+                  
 
 #endif

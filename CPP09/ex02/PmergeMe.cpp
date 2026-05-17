@@ -72,7 +72,9 @@ void PmergeMe::argvCheck(char **argv)
     int i = 1;
     long value;
     char* end;
-    
+    std::set<int> argvSet;
+    std::pair<std::set<int>::iterator, bool>  setPair;
+
     while (argv[i])
     {
         value = std::strtol(argv[i], &end, 10);
@@ -92,30 +94,23 @@ void PmergeMe::argvCheck(char **argv)
         if (value > std::numeric_limits<int>::max() || value < std::numeric_limits<int>::min())
             throw std::invalid_argument("Overflow Exception");
         if (value < 0)
-            throw std::invalid_argument("Number cannot be negative");        
+            throw std::invalid_argument("Number cannot be negative");
+
+        setPair = argvSet.insert(value);
+        if (!setPair.second) // Bunun yerine en aşağıda set.size() != argc -1 yapabilirim, hız farkı olursa yap
+            throw std::invalid_argument("Repeating number detected!");
+
         i++;
     }
 }
 
 void PmergeMe::sortVector()
 {
-    std::sort(vectorPairs.begin(), vectorPairs.end(), PairComparator());
 
-    for (size_t i = 0; i < vectorPairs.size(); i++)
-    {
-        mainVector.push_back(vectorPairs[i].first);
-        std::cout << vectorPairs[i].first << " ";
-    }
-    
 }
 
 void PmergeMe::sortDeque()
 {
-    std::sort(dequePairs.begin(), dequePairs.end(), PairComparator());
 
-    for (size_t i = 0; i < dequePairs.size(); i++)
-    {
-        mainDeque.push_back(dequePairs[i].first);
-    }
     
 }
