@@ -1,7 +1,7 @@
 #include "PmergeMe.hpp"
 
 // Vector-specific merge for winner-sorted pairs.
-static void mergePairsVector(std::vector<std::pair<int, int> >& arr, int left, int mid, int right)
+void PmergeMe::mergePairsVector(std::vector<std::pair<int, int> >& arr, int left, int mid, int right)
 {
     std::vector<std::pair<int, int> > temp;
     for (int i = left; i <= mid; ++i)
@@ -43,19 +43,19 @@ static void mergePairsVector(std::vector<std::pair<int, int> >& arr, int left, i
     }
 }
 
-static void mergeSortPairsVector(std::vector<std::pair<int, int> >& arr, int left, int right)
+void PmergeMe::mergeSortPairsVector(std::vector<std::pair<int, int> >& arr, int left, int right)
 {
     if (left < right)
     {
         int mid = left + (right - left) / 2;
-        mergeSortPairsVector(arr, left, mid);
-        mergeSortPairsVector(arr, mid + 1, right);
-        mergePairsVector(arr, left, mid, right);
+        PmergeMe::mergeSortPairsVector(arr, left, mid);
+        PmergeMe::mergeSortPairsVector(arr, mid + 1, right);
+        PmergeMe::mergePairsVector(arr, left, mid, right);
     }
 }
 
 // Deque-specific merge for winner-sorted pairs.
-static void mergePairsDeque(std::deque<std::pair<int, int> >& arr, int left, int mid, int right)
+void PmergeMe::mergePairsDeque(std::deque<std::pair<int, int> >& arr, int left, int mid, int right)
 {
     std::deque<std::pair<int, int> > temp;
     for (int i = left; i <= mid; ++i)
@@ -97,7 +97,7 @@ static void mergePairsDeque(std::deque<std::pair<int, int> >& arr, int left, int
     }
 }
 
-static void mergeSortPairsDeque(std::deque<std::pair<int, int> >& arr, int left, int right)
+void PmergeMe::mergeSortPairsDeque(std::deque<std::pair<int, int> >& arr, int left, int right)
 {
     if (left < right)
     {
@@ -228,7 +228,7 @@ void PmergeMe::sortVector()
     // Sort pairs by winner (first element) using merge-sort
     // Pair bonds remain intact during sorting
     if (vectorPairs.size() > 1)
-        mergeSortPairsVector(vectorPairs, 0, vectorPairs.size() - 1);
+        PmergeMe::mergeSortPairsVector(vectorPairs, 0, vectorPairs.size() - 1);
     
     // Extract winners (losers will be inserted in next phase)
     for (size_t i = 0; i < vectorPairs.size(); ++i)
@@ -247,7 +247,7 @@ void PmergeMe::sortDeque()
     // Sort pairs by winner (first element) using merge-sort
     // Pair bonds remain intact during sorting
     if (dequePairs.size() > 1)
-        mergeSortPairsDeque(dequePairs, 0, dequePairs.size() - 1);
+        PmergeMe::mergeSortPairsDeque(dequePairs, 0, dequePairs.size() - 1);
     
     // Extract winners (losers will be inserted in next phase)
     for (size_t i = 0; i < dequePairs.size(); ++i)
@@ -262,6 +262,8 @@ void PmergeMe::run(char **argv)
 
     // Prepare pairs once before any timing to keep benchmark fair.
     dividedIntoPairs(argv);
+    argvCheck(argv);
+
     
     // Time vector sort only
     gettimeofday(&startVector, NULL);

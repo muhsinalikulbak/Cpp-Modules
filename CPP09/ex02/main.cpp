@@ -12,7 +12,6 @@ int main(int argc, char  *argv[])
     try
     {
         PmergeMe merge;
-        merge.argvCheck(argv);
         merge.run(argv);
     }
     catch(const std::exception& e)
