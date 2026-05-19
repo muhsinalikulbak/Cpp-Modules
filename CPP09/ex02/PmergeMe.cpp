@@ -48,9 +48,9 @@ void PmergeMe::mergeSortPairsVector(std::vector<std::pair<int, int> >& arr, int 
     if (left < right)
     {
         int mid = left + (right - left) / 2;
-        PmergeMe::mergeSortPairsVector(arr, left, mid);
-        PmergeMe::mergeSortPairsVector(arr, mid + 1, right);
-        PmergeMe::mergePairsVector(arr, left, mid, right);
+        mergeSortPairsVector(arr, left, mid);
+        mergeSortPairsVector(arr, mid + 1, right);
+        mergePairsVector(arr, left, mid, right);
     }
 }
 
@@ -172,7 +172,6 @@ void PmergeMe::dividedIntoPairs(char **argv)
         }
         
         std::pair<int, int> p(winner, loser);
-
         vectorPairs.push_back(p);
         dequePairs.push_back(p);
 
@@ -187,7 +186,6 @@ void PmergeMe::argvCheck(char **argv)
     long value;
     char* end;
     std::set<int> argvSet;
-    std::pair<std::set<int>::iterator, bool>  setPair;
 
     while (argv[i])
     {
@@ -210,8 +208,7 @@ void PmergeMe::argvCheck(char **argv)
         if (value < 0)
             throw std::invalid_argument("Number cannot be negative");
 
-        setPair = argvSet.insert(value);
-        if (!setPair.second) // Bunun yerine en aşağıda set.size() != argc -1 yapabilirim, hız farkı olursa yap
+        if (!argvSet.insert(value).second) // Bunun yerine en aşağıda set.size() != argc -1 yapabilirim, hız farkı olursa yap
             throw std::invalid_argument("Repeating number detected!");
 
         i++;
@@ -220,28 +217,23 @@ void PmergeMe::argvCheck(char **argv)
 
 void PmergeMe::sortVector()
 {
-    if (vectorPairs.empty())
-        return;
-
     mainVector.clear();
 
-    // Sort pairs by winner (first element) using merge-sort
-    // Pair bonds remain intact during sorting
+
     if (vectorPairs.size() > 1)
         PmergeMe::mergeSortPairsVector(vectorPairs, 0, vectorPairs.size() - 1);
     
-    // Extract winners (losers will be inserted in next phase)
+    
     for (size_t i = 0; i < vectorPairs.size(); ++i)
     {
         mainVector.push_back(vectorPairs[i].first);
     }
+    if (vectorPairs.size() == 0 && hasStraggler)
+        mainVector.push_back(straggler);
 }
 
 void PmergeMe::sortDeque()
 {
-    if (dequePairs.empty())
-        return;
-
     mainDeque.clear();
 
     // Sort pairs by winner (first element) using merge-sort
@@ -254,32 +246,30 @@ void PmergeMe::sortDeque()
     {
         mainDeque.push_back(dequePairs[i].first);
     }
+    if (dequePairs.size() == 0 && hasStraggler)
+        mainDeque.push_back(straggler);
 }
 
 void PmergeMe::run(char **argv)
 {
     struct timeval startVector, endVector, startDeque, endDeque;
 
-    // Prepare pairs once before any timing to keep benchmark fair.
-    dividedIntoPairs(argv);
     argvCheck(argv);
+    dividedIntoPairs(argv);
 
     
-    // Time vector sort only
     gettimeofday(&startVector, NULL);
     sortVector();
     gettimeofday(&endVector, NULL);
     double timeVector = (endVector.tv_sec - startVector.tv_sec) * 1000000.0 +
                         (endVector.tv_usec - startVector.tv_usec);
     
-    // Time deque sort only
     gettimeofday(&startDeque, NULL);
     sortDeque();
     gettimeofday(&endDeque, NULL);
     double timeDeque = (endDeque.tv_sec - startDeque.tv_sec) * 1000000.0 +
                        (endDeque.tv_usec - startDeque.tv_usec);
     
-    // Display
     display(originalSequence, mainVector, timeVector, timeDeque);
 }
 
