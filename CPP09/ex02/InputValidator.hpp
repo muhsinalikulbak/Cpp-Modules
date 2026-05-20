@@ -20,12 +20,13 @@ private:
     bool hasStraggler;
 
     void reset();
-    static void argvCheck(char **argv);
 
 public:
     InputValidator();
 
-    void validateAndParse(char **argv);
+    static void validateArguments(char **argv);
+
+    void buildWinnerLoserPairs(char **argv);
 
     const std::vector<int>& getOriginalSequence() const;
     const std::vector<std::pair<int, int> >& getVectorPairs() const;

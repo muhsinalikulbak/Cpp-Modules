@@ -60,7 +60,7 @@ void PmergeMe::display(const std::vector<int>& before,
 
 void PmergeMe::run(char **argv)
 {
-    input.validateAndParse(argv);
+    input.buildWinnerLoserPairs(argv);
     sorter.loadFromValidator(input);
     measureSort();
     display(sorter.getOriginalSequence(), sorter.getSortedVector(),

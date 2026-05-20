@@ -13,11 +13,12 @@ void InputValidator::reset()
     hasStraggler = false;
 }
 
-void InputValidator::argvCheck(char **argv)
+void InputValidator::validateArguments(char **argv)
 {
     int i = 1;
     long value;
     char *end;
+    errno = 0;
     std::set<int> argvSet;
 
     if (argv == NULL)
@@ -37,7 +38,7 @@ void InputValidator::argvCheck(char **argv)
             end++;
 
         if (*end != '\0')
-            throw std::invalid_argument("Invalid Argument: Trailing characters found");
+            throw std::invalid_argument("Invalid Argument");
 
         if (value > std::numeric_limits<int>::max() ||
             value < std::numeric_limits<int>::min())
@@ -53,42 +54,42 @@ void InputValidator::argvCheck(char **argv)
     }
 }
 
-void InputValidator::validateAndParse(char **argv)
+// Girdiyi winner/loser çiftlerine ayırır.
+void InputValidator::buildWinnerLoserPairs(char **argv)
 {
     int i = 1;
-    int first;
-    int second;
+    int winner;
+    int loser;
     int temp;
 
     reset();
-    argvCheck(argv);
 
     while (argv[i])
     {
-        first = std::atoi(argv[i]);
-        originalSequence.push_back(first);
+        winner = std::atoi(argv[i]);
+        originalSequence.push_back(winner);
 
         if (argv[i + 1])
         {
-            second = std::atoi(argv[i + 1]);
-            originalSequence.push_back(second);
+            loser = std::atoi(argv[i + 1]);
+            originalSequence.push_back(loser);
         }
         else
         {
-            straggler = first;
+            straggler = winner;
             hasStraggler = true;
             break;
         }
 
-        if (first < second)
+        if (winner < loser)
         {
-            temp = first;
-            first = second;
-            second = temp;
+            temp = winner;
+            winner = loser;
+            loser = temp;
         }
 
-        vectorPairs.push_back(std::make_pair(first, second));
-        dequePairs.push_back(std::make_pair(first, second));
+        vectorPairs.push_back(std::make_pair(winner, loser));
+        dequePairs.push_back(std::make_pair(winner, loser));
 
         i += 2;
     }

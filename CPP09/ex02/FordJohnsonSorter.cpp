@@ -308,7 +308,10 @@ void FordJohnsonSorter::insertionPhaseDeque()
 void FordJohnsonSorter::sortVector()
 {
     if (originalSequence.size() <= 1 || vectorPairs.empty())
+    {
+        mainVector = originalSequence;
         return;
+    }
 
     mainVector.clear();
     vectorPend.clear();
@@ -328,7 +331,10 @@ void FordJohnsonSorter::sortVector()
 void FordJohnsonSorter::sortDeque()
 {
     if (originalSequence.size() <= 1 || dequePairs.empty())
+    {
+        mainDeque.assign(originalSequence.begin(), originalSequence.end());
         return;
+    }
 
     mainDeque.clear();
     dequePend.clear();
