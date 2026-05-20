@@ -23,50 +23,38 @@ void FordJohnsonSorter::loadFromValidator(const InputValidator& input)
     dequePend.clear();
 }
 
-// Jacobsthal sayısını hesaplar.
-int FordJohnsonSorter::jacobsthal(int n) const
-{
-    if (n == 0)
-        return 0;
-    if (n == 1)
-        return 1;
-
-    int prev2 = 0;
-    int prev1 = 1;
-    int current = 0;
-
-    for (int i = 2; i <= n; ++i)
-    {
-        current = prev1 + 2 * prev2;
-        prev2 = prev1;
-        prev1 = current;
-    }
-    return current;
-}
-
-// Pend boyutuna göre Jacobsthal insertion sırasını üretir.
+// Pend boyutuna göre Jacobsthal insertion sırasını üretir (O(n) kompleksite).
+// Jacobsthal sayılarını dinamik programlama ile ardışık hesaplar: J(n) = J(n-1) + 2*J(n-2)
 std::vector<int> FordJohnsonSorter::generateInsertionOrder(int pendSize) const
 {
     std::vector<int> order;
+    int prev2;
+    int prev1;
+    int currentJacob;
+    int lastJacob;
+    int target;
+    int i;
 
     if (pendSize <= 1)
         return order;
 
-    int jacobIndex = 3;
-    int lastJacob = 1;
+    prev2 = 0;
+    prev1 = 1;
+    currentJacob = 1;
+    lastJacob = 1;
 
     while (lastJacob < pendSize)
     {
-        int currentJacob = jacobsthal(jacobIndex);
+        currentJacob = prev1 + 2 * prev2;
+        prev2 = prev1;
+        prev1 = currentJacob;
 
-        if (currentJacob > pendSize)
-            currentJacob = pendSize;
+        target = (currentJacob > pendSize) ? pendSize : currentJacob;
 
-        for (int i = currentJacob; i > lastJacob; --i)
+        for (i = target; i > lastJacob; --i)
             order.push_back(i);
 
-        lastJacob = currentJacob;
-        jacobIndex++;
+        lastJacob = target;
     }
 
     return order;
@@ -180,6 +168,10 @@ void FordJohnsonSorter::insertionPhaseVector()
             insertStragglerVector();
         return;
     }
+ 
+    // Main vector de şu an sıralanmış winner'lar ver
+    // İlk winner'ın loser'ı şu an da main chain'deki tüm sayılardan küçük olduğu için
+    // İlk loser'ı başa eklemek bedavadır.
 
     mainVector.insert(mainVector.begin(), vectorPend[0]);
     insertLosersVector();

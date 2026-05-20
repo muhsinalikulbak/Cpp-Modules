@@ -24,9 +24,6 @@ private:
     int straggler;
     bool hasStraggler;
 
-    // Jacobsthal sayısını üretir; insertion sırasının matematiksel temelidir.
-    int jacobsthal(int n) const;
-
     // Pend boyutuna göre Jacobsthal geri-tarama sırasını üretir.
     std::vector<int> generateInsertionOrder(int pendSize) const;
 
