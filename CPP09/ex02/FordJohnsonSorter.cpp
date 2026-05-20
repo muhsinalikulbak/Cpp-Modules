@@ -1,10 +1,15 @@
+// FordJohnsonSorter.cpp, Ford-Johnson algoritmasının sıralama çekirdeğidir.
+// Bu dosya winner/loser ayrımı, Jacobsthal sırası ve sınırlandırılmış
+// lower_bound yerleştirme mantığını kendi üyeleri üzerinden yürütür.
 #include "FordJohnsonSorter.hpp"
 #include "InputValidator.hpp"
 
+// Sıralayıcı için güvenli başlangıç durumu kurar.
 FordJohnsonSorter::FordJohnsonSorter() : straggler(0), hasStraggler(false)
 {
 }
 
+// Doğrulanmış girdiyi sorter'ın iç kopyalarına aktarır.
 void FordJohnsonSorter::loadFromValidator(const InputValidator& input)
 {
     vectorPairs = input.getVectorPairs();
@@ -14,8 +19,11 @@ void FordJohnsonSorter::loadFromValidator(const InputValidator& input)
     hasStraggler = input.getHasStraggler();
     mainVector.clear();
     mainDeque.clear();
+    vectorPend.clear();
+    dequePend.clear();
 }
 
+// Jacobsthal sayısını hesaplar.
 int FordJohnsonSorter::jacobsthal(int n) const
 {
     if (n == 0)
@@ -36,6 +44,7 @@ int FordJohnsonSorter::jacobsthal(int n) const
     return current;
 }
 
+// Pend boyutuna göre Jacobsthal insertion sırasını üretir.
 std::vector<int> FordJohnsonSorter::generateInsertionOrder(int pendSize) const
 {
     std::vector<int> order;
@@ -63,10 +72,11 @@ std::vector<int> FordJohnsonSorter::generateInsertionOrder(int pendSize) const
     return order;
 }
 
+// Vector çiftlerini winner alanına göre merge eder.
 void FordJohnsonSorter::mergePairsVector(std::vector<std::pair<int, int> >& arr,
-                                        int left,
-                                        int mid,
-                                        int right)
+                                         int left,
+                                         int mid,
+                                         int right)
 {
     std::vector<std::pair<int, int> > temp;
     int i;
@@ -95,9 +105,10 @@ void FordJohnsonSorter::mergePairsVector(std::vector<std::pair<int, int> >& arr,
         arr[k++] = temp[j++];
 }
 
+// Vector çiftleri için recursive merge sort uygular.
 void FordJohnsonSorter::mergeSortPairsVector(std::vector<std::pair<int, int> >& arr,
-                                            int left,
-                                            int right)
+                                             int left,
+                                             int right)
 {
     if (left < right)
     {
@@ -108,79 +119,80 @@ void FordJohnsonSorter::mergeSortPairsVector(std::vector<std::pair<int, int> >& 
     }
 }
 
+// Vector winner çiftlerini sıralar.
 void FordJohnsonSorter::sortWinnersByMergeVector(std::vector<std::pair<int, int> >& pairs)
 {
     if (pairs.size() > 1)
         mergeSortPairsVector(pairs, 0, static_cast<int>(pairs.size()) - 1);
 }
 
-void FordJohnsonSorter::insertLosersVector(std::vector<int>& sorted,
-                                          const std::vector<int>& pend,
-                                          const std::vector<std::pair<int, int> >& pairs) const
+// Vector loser'larını kendi winner sınırlarına kadar ekler.
+void FordJohnsonSorter::insertLosersVector()
 {
-    if (pend.empty())
+    std::vector<int> insertionOrder;
+
+    if (vectorPend.empty())
         return;
 
-    std::vector<int> insertionOrder = generateInsertionOrder(pend.size());
+    insertionOrder = generateInsertionOrder(static_cast<int>(vectorPend.size()));
 
     for (size_t j = 0; j < insertionOrder.size(); ++j)
     {
         int pendIndex = insertionOrder[j] - 1;
 
-        if (pendIndex < 0 || pendIndex >= static_cast<int>(pend.size()))
+        if (pendIndex < 0 || pendIndex >= static_cast<int>(vectorPend.size()))
             continue;
 
-        int loserValue = pend[pendIndex];
-        int winnerValue = pairs[pendIndex].first;
+        int loserValue = vectorPend[pendIndex];
+        int winnerValue = vectorPairs[pendIndex].first;
 
-        std::vector<int>::iterator winnerPos = std::find(sorted.begin(),
-                                                          sorted.end(),
+        std::vector<int>::iterator winnerPos = std::find(mainVector.begin(),
+                                                          mainVector.end(),
                                                           winnerValue);
 
-        if (winnerPos == sorted.end())
-        {
-            sorted.insert(sorted.end(), loserValue);
-        }
+        if (winnerPos == mainVector.end())
+            mainVector.insert(mainVector.end(), loserValue);
         else
         {
-            std::vector<int>::iterator insertPos = std::lower_bound(sorted.begin(),
+            std::vector<int>::iterator insertPos = std::lower_bound(mainVector.begin(),
                                                                      winnerPos,
                                                                      loserValue);
-            sorted.insert(insertPos, loserValue);
+            mainVector.insert(insertPos, loserValue);
         }
     }
 }
 
-void FordJohnsonSorter::insertStragglerVector(std::vector<int>& sorted) const
+// Tek kalan sayıyı vector sonuca ekler.
+void FordJohnsonSorter::insertStragglerVector()
 {
-    std::vector<int>::iterator pos = std::lower_bound(sorted.begin(),
-                                                      sorted.end(),
+    std::vector<int>::iterator pos = std::lower_bound(mainVector.begin(),
+                                                      mainVector.end(),
                                                       straggler);
-    sorted.insert(pos, straggler);
+    mainVector.insert(pos, straggler);
 }
 
-void FordJohnsonSorter::insertionPhaseVector(std::vector<int>& sorted,
-                                            const std::vector<int>& pend,
-                                            const std::vector<std::pair<int, int> >& pairs) const
+// Vector insertion fazını yönetir.
+void FordJohnsonSorter::insertionPhaseVector()
 {
-    if (pend.empty())
+    if (vectorPend.empty())
     {
         if (hasStraggler)
-            insertStragglerVector(sorted);
+            insertStragglerVector();
         return;
     }
 
-    sorted.insert(sorted.begin(), pend[0]);
-    insertLosersVector(sorted, pend, pairs);
+    mainVector.insert(mainVector.begin(), vectorPend[0]);
+    insertLosersVector();
 
     if (hasStraggler)
-        insertStragglerVector(sorted);
+        insertStragglerVector();
 }
 
+// Deque çiftlerini winner alanına göre merge eder.
 void FordJohnsonSorter::mergePairsDeque(std::deque<std::pair<int, int> >& arr,
-                                       int left,
-                                       int mid,
-                                       int right)
+                                        int left,
+                                        int mid,
+                                        int right)
 {
     std::deque<std::pair<int, int> > temp;
     int i;
@@ -209,9 +221,10 @@ void FordJohnsonSorter::mergePairsDeque(std::deque<std::pair<int, int> >& arr,
         arr[k++] = temp[j++];
 }
 
+// Deque çiftleri için recursive merge sort uygular.
 void FordJohnsonSorter::mergeSortPairsDeque(std::deque<std::pair<int, int> >& arr,
-                                           int left,
-                                           int right)
+                                            int left,
+                                            int right)
 {
     if (left < right)
     {
@@ -222,127 +235,128 @@ void FordJohnsonSorter::mergeSortPairsDeque(std::deque<std::pair<int, int> >& ar
     }
 }
 
+// Deque winner çiftlerini sıralar.
 void FordJohnsonSorter::sortWinnersByMergeDeque(std::deque<std::pair<int, int> >& pairs)
 {
     if (pairs.size() > 1)
         mergeSortPairsDeque(pairs, 0, static_cast<int>(pairs.size()) - 1);
 }
 
-void FordJohnsonSorter::insertLosersDeque(std::deque<int>& sorted,
-                                         const std::deque<int>& pend,
-                                         const std::deque<std::pair<int, int> >& pairs) const
+// Deque loser'larını kendi winner sınırlarına kadar ekler.
+void FordJohnsonSorter::insertLosersDeque()
 {
-    if (pend.empty())
+    std::vector<int> insertionOrder;
+
+    if (dequePend.empty())
         return;
 
-    std::vector<int> insertionOrder = generateInsertionOrder(pend.size());
+    insertionOrder = generateInsertionOrder(static_cast<int>(dequePend.size()));
 
     for (size_t j = 0; j < insertionOrder.size(); ++j)
     {
         int pendIndex = insertionOrder[j] - 1;
 
-        if (pendIndex < 0 || pendIndex >= static_cast<int>(pend.size()))
+        if (pendIndex < 0 || pendIndex >= static_cast<int>(dequePend.size()))
             continue;
 
-        int loserValue = pend[pendIndex];
-        int winnerValue = pairs[pendIndex].first;
+        int loserValue = dequePend[pendIndex];
+        int winnerValue = dequePairs[pendIndex].first;
 
-        std::deque<int>::iterator winnerPos = std::find(sorted.begin(),
-                                                         sorted.end(),
+        std::deque<int>::iterator winnerPos = std::find(mainDeque.begin(),
+                                                         mainDeque.end(),
                                                          winnerValue);
 
-        if (winnerPos == sorted.end())
-        {
-            sorted.insert(sorted.end(), loserValue);
-        }
+        if (winnerPos == mainDeque.end())
+            mainDeque.insert(mainDeque.end(), loserValue);
         else
         {
-            std::deque<int>::iterator insertPos = std::lower_bound(sorted.begin(),
+            std::deque<int>::iterator insertPos = std::lower_bound(mainDeque.begin(),
                                                                     winnerPos,
                                                                     loserValue);
-            sorted.insert(insertPos, loserValue);
+            mainDeque.insert(insertPos, loserValue);
         }
     }
 }
 
-void FordJohnsonSorter::insertStragglerDeque(std::deque<int>& sorted) const
+// Tek kalan sayıyı deque sonuca ekler.
+void FordJohnsonSorter::insertStragglerDeque()
 {
-    std::deque<int>::iterator pos = std::lower_bound(sorted.begin(),
-                                                     sorted.end(),
+    std::deque<int>::iterator pos = std::lower_bound(mainDeque.begin(),
+                                                     mainDeque.end(),
                                                      straggler);
-    sorted.insert(pos, straggler);
+    mainDeque.insert(pos, straggler);
 }
 
-void FordJohnsonSorter::insertionPhaseDeque(std::deque<int>& sorted,
-                                           const std::deque<int>& pend,
-                                           const std::deque<std::pair<int, int> >& pairs) const
+// Deque insertion fazını yönetir.
+void FordJohnsonSorter::insertionPhaseDeque()
 {
-    if (pend.empty())
+    if (dequePend.empty())
     {
         if (hasStraggler)
-            insertStragglerDeque(sorted);
+            insertStragglerDeque();
         return;
     }
 
-    sorted.insert(sorted.begin(), pend[0]);
-    insertLosersDeque(sorted, pend, pairs);
+    mainDeque.insert(mainDeque.begin(), dequePend[0]);
+    insertLosersDeque();
 
     if (hasStraggler)
-        insertStragglerDeque(sorted);
+        insertStragglerDeque();
 }
 
+// Vector sıralamasını çalıştırır.
 void FordJohnsonSorter::sortVector()
 {
-    std::vector<std::pair<int, int> > pairs = vectorPairs;
-    std::vector<int> pend;
-
-    mainVector = originalSequence;
-    if (mainVector.size() <= 1)
+    if (originalSequence.size() <= 1 || vectorPairs.empty())
         return;
-
-    sortWinnersByMergeVector(pairs);
 
     mainVector.clear();
-    for (size_t i = 0; i < pairs.size(); ++i)
+    vectorPend.clear();
+
+    sortWinnersByMergeVector(vectorPairs);
+
+    for (size_t i = 0; i < vectorPairs.size(); ++i)
     {
-        mainVector.push_back(pairs[i].first);
-        pend.push_back(pairs[i].second);
+        mainVector.push_back(vectorPairs[i].first);
+        vectorPend.push_back(vectorPairs[i].second);
     }
 
-    insertionPhaseVector(mainVector, pend, pairs);
+    insertionPhaseVector();
 }
 
+// Deque sıralamasını çalıştırır.
 void FordJohnsonSorter::sortDeque()
 {
-    std::deque<std::pair<int, int> > pairs = dequePairs;
-    std::deque<int> pend;
-
-    mainDeque.assign(originalSequence.begin(), originalSequence.end());
-    if (mainDeque.size() <= 1)
+    if (originalSequence.size() <= 1 || dequePairs.empty())
         return;
 
-    sortWinnersByMergeDeque(pairs);
-
     mainDeque.clear();
-    for (size_t i = 0; i < pairs.size(); ++i)
+    dequePend.clear();
+
+    sortWinnersByMergeDeque(dequePairs);
+
+    for (size_t i = 0; i < dequePairs.size(); ++i)
     {
-        mainDeque.push_back(pairs[i].first);
-        pend.push_back(pairs[i].second);
+        mainDeque.push_back(dequePairs[i].first);
+        dequePend.push_back(dequePairs[i].second);
     }
 
-    insertionPhaseDeque(mainDeque, pend, pairs);
+    insertionPhaseDeque();
 }
 
+// Sıralanmış vector sonucunu döndürür.
 const std::vector<int>& FordJohnsonSorter::getSortedVector() const
 {
     return mainVector;
 }
 
+// Sıralanmış deque sonucunu döndürür.
 const std::deque<int>& FordJohnsonSorter::getSortedDeque() const
 {
     return mainDeque;
 }
 
+// Orijinal giriş dizisini döndürür.
 const std::vector<int>& FordJohnsonSorter::getOriginalSequence() const
 {
     return originalSequence;
