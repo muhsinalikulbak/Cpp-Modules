@@ -1,15 +1,9 @@
 #include "PmergeMe.hpp"
 
-// PmergeMe.cpp, programın üst seviye yürütme katmanıdır. Bu dosya algoritma
-// detaylarına girmez; yalnızca girdi hazırlığı, sıralama süre ölçümü ve
-// nihai çıktının sunumundan sorumludur.
-
-// Zaman ölçümlerini sıfırlayarak orkestratörü hazırlar.
 PmergeMe::PmergeMe() : vectorTime(0), dequeTime(0)
 {
 }
 
-// İki zaman damgası arasındaki mikro saniye farkını hesaplar.
 double PmergeMe::getTimeInMicroseconds(struct timeval start,
                                       struct timeval end) const
 {
@@ -17,7 +11,6 @@ double PmergeMe::getTimeInMicroseconds(struct timeval start,
            (end.tv_usec - start.tv_usec);
 }
 
-// Vector ve deque sıralama süresini ayrı ayrı ölçer.
 void PmergeMe::measureSort()
 {
     struct timeval start;
@@ -34,7 +27,6 @@ void PmergeMe::measureSort()
     dequeTime = getTimeInMicroseconds(start, end);
 }
 
-// Sıralama öncesi ve sonrası dizileri ile süreleri okunabilir biçimde yazar.
 void PmergeMe::display(const std::vector<int>& before,
                       const std::vector<int>& after,
                       double timeVector,
@@ -66,7 +58,6 @@ void PmergeMe::display(const std::vector<int>& before,
               << std::setprecision(5) << timeDeque << " us" << std::endl;
 }
 
-// Girdiyi doğrular, sıralayıcıyı besler, süreleri ölçer ve sonucu gösterir.
 void PmergeMe::run(char **argv)
 {
     input.validateAndParse(argv);

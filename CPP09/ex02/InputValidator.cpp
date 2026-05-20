@@ -1,13 +1,9 @@
-// InputValidator.cpp, giriş doğrulama ve başlangıç veri ayrıştırma görevini
-// üstlenir. Bu dosya algoritmanın kendisini değil, sadece doğru veriyi
-// hazırlayan veri kapısını yönetir.
 #include "InputValidator.hpp"
 
 InputValidator::InputValidator() : straggler(0), hasStraggler(false)
 {
 }
 
-// Eski parse sonucunu temizleyerek yeni girdiye hazırlar.
 void InputValidator::reset()
 {
     originalSequence.clear();
@@ -17,7 +13,6 @@ void InputValidator::reset()
     hasStraggler = false;
 }
 
-// argv üzerinde tam sayı, taşma, negatif sayı ve tekrar denetimi yapar.
 void InputValidator::argvCheck(char **argv)
 {
     int i = 1;
@@ -58,7 +53,6 @@ void InputValidator::argvCheck(char **argv)
     }
 }
 
-// Girdiyi ayrıştırır, orijinal sıra ile çiftli winner/loser yapısını kurar.
 void InputValidator::validateAndParse(char **argv)
 {
     int i = 1;
@@ -100,32 +94,27 @@ void InputValidator::validateAndParse(char **argv)
     }
 }
 
-// Orijinal giriş dizisini döndürür.
-std::vector<int>& InputValidator::getOriginalSequence()
+const std::vector<int>& InputValidator::getOriginalSequence() const
 {
     return originalSequence;
 }
 
-// Vector sıralaması için hazırlanan çiftleri döndürür.
-std::vector<std::pair<int, int> >& InputValidator::getVectorPairs()
+const std::vector<std::pair<int, int> >& InputValidator::getVectorPairs() const
 {
     return vectorPairs;
 }
 
-// Deque sıralaması için hazırlanan çiftleri döndürür.
-std::deque<std::pair<int, int> >& InputValidator::getDequePairs()
+const std::deque<std::pair<int, int> >& InputValidator::getDequePairs() const
 {
     return dequePairs;
 }
 
-// Tek kalan sayıyı döndürür.
-int& InputValidator::getStraggler()
+int InputValidator::getStraggler() const
 {
     return straggler;
 }
 
-// Tek kalan sayı bilgisini döndürür.
-bool& InputValidator::getHasStraggler()
+bool InputValidator::getHasStraggler() const
 {
     return hasStraggler;
 }
