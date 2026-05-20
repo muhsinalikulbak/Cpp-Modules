@@ -313,9 +313,6 @@ void FordJohnsonSorter::sortVector()
         return;
     }
 
-    mainVector.clear();
-    vectorPend.clear();
-
     sortWinnersByMergeVector(vectorPairs);
 
     for (size_t i = 0; i < vectorPairs.size(); ++i)
@@ -335,9 +332,6 @@ void FordJohnsonSorter::sortDeque()
         mainDeque.assign(originalSequence.begin(), originalSequence.end());
         return;
     }
-
-    mainDeque.clear();
-    dequePend.clear();
 
     sortWinnersByMergeDeque(dequePairs);
 
