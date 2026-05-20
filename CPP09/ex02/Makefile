@@ -5,8 +5,10 @@ CXXFLAGS =  -Wall -Wextra -Werror -std=c++98
 
 SRCS =	main.cpp \
 		PmergeMe.cpp \
+		InputValidator.cpp \
+		FordJohnsonSorter.cpp \
 
-
+HEADERS = PmergeMe.hpp InputValidator.hpp FordJohnsonSorter.hpp
 
 OBJS_DIR = obj
 OBJS = $(addprefix $(OBJS_DIR)/, $(SRCS:.cpp=.o))
