@@ -71,7 +71,6 @@ void BitcoinExchange::loadDatabase()
         
         dateMap[date] = value;
     }
-
 }
 
 bool BitcoinExchange::isLeapYear(int year) 
@@ -96,7 +95,7 @@ void BitcoinExchange::isValidDate(const std::string& date)
     ss >> seperate;
     ss >> day;
 
-    if (month > 12 || month == 0)
+    if (month > 12 || month < 1 || day < 1 || day > 31)
         throw std::invalid_argument("Error: bad input => " + date);
 
     if (month != 2 && day > months[month-1])
@@ -170,7 +169,7 @@ void BitcoinExchange::processInput(std::ifstream& file)
             
             isValidValue(strValue);
             std::stringstream(strValue) >> value;
-
+                
             isFormatValid(date);
             isValidDate(date);
 
@@ -178,7 +177,7 @@ void BitcoinExchange::processInput(std::ifstream& file)
 
             if (it == dateMap.begin())
                 throw std::invalid_argument("Error: bad input => " + date);
-            --it;
+            it--;
 
             std::cout << date << " => " << value << " = " << value * it->second << std::endl;
         }
@@ -189,11 +188,14 @@ void BitcoinExchange::processInput(std::ifstream& file)
     }
 }
 
-std::string BitcoinExchange::trim(const std::string& str) 
+std::string BitcoinExchange::trim(const std::string& str)
 {
+    // string içinde whitespace olmayan ilk karakterin indexini bul
     size_t first = str.find_first_not_of(" \t\n\r");
     if (first == std::string::npos)
         return "";
+
+    // string içinde whitespace olmayan son karakterin indexini bul
     size_t last = str.find_last_not_of(" \t\n\r");
     return str.substr(first, (last - first + 1));
 }

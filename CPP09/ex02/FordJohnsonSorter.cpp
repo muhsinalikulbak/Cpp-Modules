@@ -173,7 +173,7 @@ void FordJohnsonSorter::insertionPhaseVector()
     // İlk winner'ın loser'ı şu an da main chain'deki tüm sayılardan küçük olduğu için
     // İlk loser'ı başa eklemek bedavadır.
 
-    mainVector.insert(mainVector.begin(), vectorPend[0]);
+    mainVector.insert(mainVector.begin(), vectorPend[0]); // Tekrar ekleme sorunu olmuyor mu ?
     insertLosersVector();
 
     if (hasStraggler)
