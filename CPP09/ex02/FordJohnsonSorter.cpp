@@ -4,6 +4,37 @@ FordJohnsonSorter::FordJohnsonSorter() : straggler(0), hasStraggler(false)
 {
 }
 
+FordJohnsonSorter::FordJohnsonSorter(const FordJohnsonSorter& other)
+    : vectorPairs(other.vectorPairs), dequePairs(other.dequePairs),
+      mainVector(other.mainVector), mainDeque(other.mainDeque),
+      vectorPend(other.vectorPend), dequePend(other.dequePend),
+      originalSequence(other.originalSequence), straggler(other.straggler),
+      hasStraggler(other.hasStraggler)
+{
+}
+
+FordJohnsonSorter& FordJohnsonSorter::operator=(const FordJohnsonSorter& other)
+{
+    if (this == &other)
+        return *this;
+
+    vectorPairs = other.vectorPairs;
+    dequePairs = other.dequePairs;
+    mainVector = other.mainVector;
+    mainDeque = other.mainDeque;
+    vectorPend = other.vectorPend;
+    dequePend = other.dequePend;
+    originalSequence = other.originalSequence;
+    straggler = other.straggler;
+    hasStraggler = other.hasStraggler;
+
+    return *this;
+}
+
+FordJohnsonSorter::~FordJohnsonSorter()
+{
+}
+
 
 // Pend boyutuna göre Jacobsthal insertion sırasını üretir (O(n) kompleksite).
 // Jacobsthal sayılarını dinamik programlama ile ardışık hesaplar: J(n) = J(n-1) + 2*J(n-2)

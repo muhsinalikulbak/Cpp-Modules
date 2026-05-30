@@ -67,6 +67,9 @@ private:
 
 public:
     FordJohnsonSorter();
+    FordJohnsonSorter(const FordJohnsonSorter& other);
+    FordJohnsonSorter& operator=(const FordJohnsonSorter& other);
+    ~FordJohnsonSorter();
     
     void buildWinnerLoserPairs(char **argv);
 

@@ -4,6 +4,27 @@ PmergeMe::PmergeMe() : vectorTime(0), dequeTime(0)
 {
 }
 
+PmergeMe::PmergeMe(const PmergeMe& other)
+    : sorter(other.sorter), vectorTime(other.vectorTime), dequeTime(other.dequeTime)
+{
+}
+
+PmergeMe& PmergeMe::operator=(const PmergeMe& other)
+{
+    if (this == &other)
+        return *this;
+
+    sorter = other.sorter;
+    vectorTime = other.vectorTime;
+    dequeTime = other.dequeTime;
+
+    return *this;
+}
+
+PmergeMe::~PmergeMe()
+{
+}
+
 double PmergeMe::getTimeInMicroseconds(struct timeval start,
                                       struct timeval end) const
 {
