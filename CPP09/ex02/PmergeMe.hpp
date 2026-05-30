@@ -6,13 +6,20 @@
 #include <iomanip>
 #include <sys/time.h>
 
-#include "InputValidator.hpp"
+#include <limits>
+#include <vector>
+#include <deque>
+#include <utility>
+#include <cstdlib>
+#include <cerrno>
+#include <set>
+#include <stdexcept>
+
 #include "FordJohnsonSorter.hpp"
 
 class PmergeMe
 {
 private:
-    InputValidator input;
     FordJohnsonSorter sorter;
     double vectorTime;
     double dequeTime;
@@ -26,6 +33,8 @@ private:
 
 public:
     PmergeMe();
+    static void validateArguments(char **argv);
+
 
     void run(char **argv);
 };

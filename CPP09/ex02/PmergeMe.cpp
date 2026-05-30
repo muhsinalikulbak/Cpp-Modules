@@ -58,11 +58,55 @@ void PmergeMe::display(const std::vector<int>& before,
               << std::setprecision(5) << timeDeque << " us" << std::endl;
 }
 
+
+
 void PmergeMe::run(char **argv)
 {
-    input.buildWinnerLoserPairs(argv);
-    sorter.loadFromValidator(input);
+    validateArguments(argv);
+    sorter.buildWinnerLoserPairs(argv);
     measureSort();
     display(sorter.getOriginalSequence(), sorter.getSortedVector(),
             vectorTime, dequeTime);
+}
+
+
+void PmergeMe::validateArguments(char **argv)
+{
+    int i = 1;
+    long value;
+    char *end;
+    errno = 0;
+    std::set<int> argvSet;
+
+    if (argv == NULL)
+        throw std::invalid_argument("Invalid Argument!");
+
+    while (argv[i])
+    {
+        value = std::strtol(argv[i], &end, 10);
+
+        if (errno == ERANGE)
+            throw std::invalid_argument("Overflow Exception");
+
+        if (end == argv[i])
+            throw std::invalid_argument(std::string("Invalid Argument: ") + end);
+
+        while (*end != '\0' && *end == ' ')
+            end++;
+
+        if (*end != '\0')
+            throw std::invalid_argument("Invalid Argument");
+
+        if (value > std::numeric_limits<int>::max() ||
+            value < std::numeric_limits<int>::min())
+            throw std::invalid_argument("Overflow Exception");
+
+        if (value < 0)
+            throw std::invalid_argument("Number cannot be negative");
+
+        if (!argvSet.insert(static_cast<int>(value)).second)
+            throw std::invalid_argument("Repeating number detected!");
+
+        i++;
+    }
 }
