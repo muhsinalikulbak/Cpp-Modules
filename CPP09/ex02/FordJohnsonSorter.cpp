@@ -38,7 +38,6 @@ FordJohnsonSorter::~FordJohnsonSorter()
 
 // Pend boyutuna göre Jacobsthal insertion sırasını üretir (O(n) kompleksite).
 // Jacobsthal sayılarını dinamik programlama ile ardışık hesaplar: J(n) = J(n-1) + 2*J(n-2)
-
 std::vector<int> FordJohnsonSorter::generateInsertionOrder(int pendSize) const
 {
     std::vector<int> order;
@@ -52,10 +51,10 @@ std::vector<int> FordJohnsonSorter::generateInsertionOrder(int pendSize) const
     if (pendSize <= 1)
         return order;
 
-    prev2 = 0;
-    prev1 = 1;
-    currentJacob = 1;
-    lastJacob = 1;
+    prev2 = 0; // Önceki jacob
+    prev1 = 1; // güncel jacob
+    currentJacob = 1; // İlk eleman bedava eklendiği için bir sonraji jacobdan başlanıyor
+    lastJacob = 1; // En son işlenen jacob
 
     while (lastJacob < pendSize)
     {
@@ -63,14 +62,17 @@ std::vector<int> FordJohnsonSorter::generateInsertionOrder(int pendSize) const
         prev2 = prev1;
         prev1 = currentJacob;
 
+        // Current jacob pendsize sınırlarında olmalıdır çünkü pend size ' a kadar index üretiyoruz
+        // Çünkü pend size kadar elemanımız var
+
         target = (currentJacob > pendSize) ? pendSize : currentJacob;
 
         for (i = target; i > lastJacob; --i)
             order.push_back(i);
 
         lastJacob = target;
-    }
-
+    };
+    
     return order;
 }
 
@@ -151,15 +153,10 @@ void FordJohnsonSorter::insertLosersVector()
                                                           mainVector.end(),
                                                           winnerValue);
 
-        if (winnerPos == mainVector.end())
-            mainVector.insert(mainVector.end(), loserValue);
-        else
-        {
-            std::vector<int>::iterator insertPos = std::lower_bound(mainVector.begin(),
-                                                                     winnerPos,
-                                                                     loserValue);
-            mainVector.insert(insertPos, loserValue);
-        }
+        std::vector<int>::iterator insertPos = std::lower_bound(mainVector.begin(),
+                                                                    winnerPos,
+                                                                    loserValue);
+        mainVector.insert(insertPos, loserValue);
     }
 }
 
